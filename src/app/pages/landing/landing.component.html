@@ -2,7 +2,7 @@
   <button type="submit">Create new Session</button>
 </form>
 
-<form (ngSubmit)="joinSession(id.value)">
+<form (ngSubmit)="router.navigate(['session', id.value])">
   <input #id name="sessionId" type="text" />
   <button type="submit">Join Session</button>
 </form>

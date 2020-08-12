@@ -10,9 +10,10 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { LandingComponent } from './pages/landing/landing.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SessionComponent } from './pages/session/session.component';
 
 @NgModule({
-  declarations: [AppComponent, LandingComponent],
+  declarations: [AppComponent, LandingComponent, SessionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
