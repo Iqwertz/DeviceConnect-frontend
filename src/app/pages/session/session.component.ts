@@ -1,6 +1,13 @@
 import { ConnectService } from './../../services/connect.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  Event,
+  NavigationStart,
+  NavigationError,
+  NavigationEnd,
+} from '@angular/router';
 import { SessionMessagesComponent } from '../../components/session-messages/session-messages.component';
 import { MessagesService } from '../../services/messages.service';
 import { environment } from '../../../environments/environment';
@@ -11,6 +18,7 @@ import { environment } from '../../../environments/environment';
 })
 export class SessionComponent implements OnInit {
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private connectService: ConnectService,
     private messagesService: MessagesService
@@ -18,11 +26,25 @@ export class SessionComponent implements OnInit {
   socket: SocketIOClient.Socket;
   @ViewChild(SessionMessagesComponent)
   messagesComponent: SessionMessagesComponent;
-  textMessage: string;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.joinSession(params.get('id'));
+    });
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        //do something on start activity
+      }
+
+      if (event instanceof NavigationError) {
+        console.error(event.error);
+      }
+
+      if (event instanceof NavigationEnd) {
+        this.messagesService.removeAllMessages();
+        this.socket.close();
+      }
     });
   }
 
@@ -54,7 +76,6 @@ export class SessionComponent implements OnInit {
   }
 
   sendMessage(msg: string) {
-    this.textMessage = '';
     this.socket.emit(environment.messageIdentifier, msg);
   }
 }

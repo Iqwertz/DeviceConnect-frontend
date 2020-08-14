@@ -12,9 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SessionComponent } from './pages/session/session.component';
 import { SessionMessagesComponent } from './components/session-messages/session-messages.component';
+import { SessionMessagesTextFieldComponent } from './components/session-messages-text-field/session-messages-text-field.component';
 
 @NgModule({
-  declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent],
+  declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent, SessionMessagesTextFieldComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

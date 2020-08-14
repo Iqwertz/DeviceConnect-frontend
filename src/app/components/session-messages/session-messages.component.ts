@@ -5,7 +5,6 @@ import { MessagesService } from '../../services/messages.service';
   selector: 'app-session-messages',
   templateUrl: './session-messages.component.html',
   styleUrls: ['./session-messages.component.scss'],
-  //encapsulation: ViewEncapsulation.None,
 })
 export class SessionMessagesComponent implements OnInit {
   constructor(private messagesService: MessagesService) {}

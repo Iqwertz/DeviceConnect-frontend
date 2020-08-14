@@ -1,8 +1,5 @@
 <p>session works!</p>
 <app-session-messages> </app-session-messages>
-<div class="session-container">
-  <form (ngSubmit)="sendMessage(textMessage)">
-    <input [(ngModel)]="textMessage" name="msgField" autocomplete="off" />
-    <button type="submit">Send</button>
-  </form>
-</div>
+<app-session-messages-text-field
+  (newMessageChange)="sendMessage($event)"
+></app-session-messages-text-field>

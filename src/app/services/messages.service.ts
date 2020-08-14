@@ -16,6 +16,12 @@ export class MessagesService {
     this.messages.push(msg);
     this.onUpdate$$.next(this.messages);
   }
+
+  removeAllMessages() {
+    this.messages = [];
+    this.onUpdate$$.next(this.messages);
+  }
+
   ngOnDestroy() {
     this.onUpdate$$.complete();
   }
