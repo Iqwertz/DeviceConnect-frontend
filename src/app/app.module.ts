@@ -11,9 +11,10 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SessionComponent } from './pages/session/session.component';
+import { SessionMessagesComponent } from './components/session-messages/session-messages.component';
 
 @NgModule({
-  declarations: [AppComponent, LandingComponent, SessionComponent],
+  declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

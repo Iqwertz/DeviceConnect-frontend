@@ -5,6 +5,13 @@
 export const environment = {
   production: false,
   socketEndpoint: 'http://localhost:3000',
+  messageIdentifier: 'chat message',
+  reconnectSettings: {
+    reconnection: true,
+    reconnectionDelay: 500,
+    reconnectionDelayMax: 5000,
+    reconnectionAttempts: 5,
+  },
 };
 
 /*
