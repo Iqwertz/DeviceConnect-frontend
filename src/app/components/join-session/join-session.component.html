@@ -1,1 +1,46 @@
-<p>join-session works!</p>
+<div class="join-session-container">
+  <form
+    (ngSubmit)="
+      joinSession(id1.value + '' + id2.value + '' + id3.value + '' + id4.value)
+    "
+  >
+    <div class="input-field-container">
+      <input
+        #id1
+        name="sessionId1"
+        type="text"
+        maxlength="1"
+        (keyup)="inputKey($event)"
+      />
+      <input
+        #id2
+        name="sessionId2"
+        type="text"
+        maxlength="1"
+        (keyup)="inputKey($event)"
+      />
+      <input
+        #id3
+        name="sessionId3"
+        type="text"
+        maxlength="1"
+        (keyup)="inputKey($event)"
+      />
+      <input
+        #id4
+        name="sessionId4"
+        type="text"
+        maxlength="1"
+        (keyup)="inputKey($event)"
+      />
+      <!-- <input
+            #id
+            name="sessionId"
+            type="text"
+            maxlength="4"
+            onKeyPress="if(this.value.length==4) return false;"
+          /> -->
+    </div>
+    <button type="submit">Join Session</button>
+  </form>
+</div>

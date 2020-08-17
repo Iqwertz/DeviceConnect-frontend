@@ -1,0 +1,50 @@
+@import "./src/scss/variables";
+
+.join-session-container {
+  margin: 1.5em;
+
+  form {
+    display: flex;
+    flex-flow: column;
+  }
+
+  .input-field-container {
+    margin: 5px 0 20px 0;
+  }
+
+  input {
+    text-transform: uppercase;
+    margin: 5px;
+    height: 1.5em;
+    width: 1em;
+    text-align: center;
+    font-size: 2.8em;
+    border: none;
+    border-radius: 15px;
+    box-shadow: $button-shadow;
+    color: $light-text-color;
+  }
+
+  input:nth-child(1) {
+    background: $input-field1-color;
+  }
+  input:nth-child(2) {
+    background: $input-field2-color;
+  }
+  input:nth-child(3) {
+    background: $input-field3-color;
+  }
+  input:nth-child(4) {
+    background: $input-field4-color;
+  }
+
+  button {
+    box-shadow: $button-shadow;
+    border: 0;
+    @include button-background(320deg);
+    padding: 20px;
+    font-size: 1.5em;
+    border-radius: 20px;
+    color: $light-text-color;
+  }
+}
