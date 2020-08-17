@@ -14,9 +14,10 @@ import { SessionComponent } from './pages/session/session.component';
 import { SessionMessagesComponent } from './components/session-messages/session-messages.component';
 import { SessionMessagesTextFieldComponent } from './components/session-messages-text-field/session-messages-text-field.component';
 import { JoinSessionComponent } from './components/join-session/join-session.component';
+import { CreateSessionComponent } from './components/create-session/create-session.component';
 
 @NgModule({
-  declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent, SessionMessagesTextFieldComponent, JoinSessionComponent],
+  declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent, SessionMessagesTextFieldComponent, JoinSessionComponent, CreateSessionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
