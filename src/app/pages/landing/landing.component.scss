@@ -1,0 +1,91 @@
+@import "./src/scss/variables";
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
+
+.landing-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  @include background();
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: "Dosis", sans-serif;
+  color: $light-text-color;
+
+  .website-title {
+    max-width: 80%;
+    margin: 40px;
+    font-size: 6em;
+    word-wrap: break-word;
+  }
+
+  .create-session-container {
+    button {
+      margin: 1.5em;
+      box-shadow: $button-shadow;
+      border: 0;
+      @include button-background(149deg);
+      padding: 20px;
+      font-size: 1.5em;
+      border-radius: 20px;
+      color: $light-text-color;
+    }
+  }
+
+  .or-container {
+    font-size: 2em;
+  }
+
+  .join-session-container {
+    margin: 1.5em;
+
+    form {
+      display: flex;
+      flex-flow: column;
+    }
+
+    .input-field-container {
+      margin: 5px 0 20px 0;
+    }
+
+    input {
+      text-transform: uppercase;
+      margin: 5px;
+      height: 1.5em;
+      width: 1em;
+      text-align: center;
+      font-size: 2.8em;
+      border: none;
+      border-radius: 15px;
+      box-shadow: $button-shadow;
+      color: $light-text-color;
+    }
+
+    input:nth-child(1) {
+      background: $input-field1-color;
+    }
+    input:nth-child(2) {
+      background: $input-field2-color;
+    }
+    input:nth-child(3) {
+      background: $input-field3-color;
+    }
+    input:nth-child(4) {
+      background: $input-field4-color;
+    }
+
+    button {
+      box-shadow: $button-shadow;
+      border: 0;
+      @include button-background(320deg);
+      padding: 20px;
+      font-size: 1.5em;
+      border-radius: 20px;
+      color: $light-text-color;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+$light-text-color: rgb(238, 238, 238);
+
+$dark-text-color: #000;
+
+$accent1: #000850;
+
+$accent2: #ff6928;
+
+$accent3: rgb(153, 0, 224);
+
+@mixin button-background($angle) {
+  background: linear-gradient($angle, #ff0055 0%, #00294f 90%);
+}
+
+$input-field1-color: #005fb8;
+$input-field2-color: #0069cc;
+$input-field3-color: #0074e0;
+$input-field4-color: #007ef5;
+
+$button-shadow: 4px 4px 5px #000;
+
+@mixin background() {
+  background: linear-gradient(45deg, #000850 0%, #000320 100%),
+    radial-gradient(100% 225% at 100% 0%, #ff6928 0%, #000000 100%),
+    linear-gradient(225deg, #ff7a00 0%, #000000 100%),
+    linear-gradient(
+      135deg,
+      #cdffeb 10%,
+      #cdffeb 35%,
+      #009f9d 35%,
+      #009f9d 60%,
+      #07456f 60%,
+      #07456f 67%,
+      #0f0a3c 67%,
+      #0f0a3c 100%
+    );
+  background-blend-mode: screen, overlay, hard-light, normal;
+}
