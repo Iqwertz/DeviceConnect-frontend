@@ -1,5 +1,15 @@
-<p>session works!</p>
-<app-session-messages> </app-session-messages>
-<app-session-messages-text-field
-  (newMessageChange)="sendMessage($event)"
-></app-session-messages-text-field>
+<div class="active-session-container" *ngIf="!sessionError">
+  <app-session-messages> </app-session-messages>
+  <app-session-messages-text-field
+    (newMessageChange)="sendMessage($event)"
+  ></app-session-messages-text-field>
+</div>
+
+<div class="session-error-container" *ngIf="sessionError">
+  <h1>
+    Sorry!!! <br />
+    The Session with the id '{{ currentSessionId }}' doesn't exist!
+  </h1>
+
+  <a href="/"><button>Back to Start</button></a>
+</div>

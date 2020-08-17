@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./src/scss/variables";
+
 body {
+  display: block;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  @include background();
 }

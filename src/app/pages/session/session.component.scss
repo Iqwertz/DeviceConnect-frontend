@@ -1,0 +1,26 @@
+@import "./src/scss/variables";
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
+
+.session-error-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+
+  h1 {
+    max-width: 80%;
+    line-break: auto;
+    font-size: 2.5em;
+    color: $light-text-color;
+    font-family: "Dosis", sans-serif;
+  }
+
+  button {
+    @include button-background(320deg);
+    @include button-style();
+  }
+}

@@ -20,7 +20,7 @@ $input-field4-color: #007ef5;
 $button-shadow: 4px 4px 5px #000;
 
 @mixin background() {
-  background: linear-gradient(45deg, #000850 0%, #000320 100%),
+  background-image: linear-gradient(45deg, #000850 0%, #000320 100%),
     radial-gradient(100% 225% at 100% 0%, #ff6928 0%, #000000 100%),
     linear-gradient(225deg, #ff7a00 0%, #000000 100%),
     linear-gradient(
@@ -35,4 +35,13 @@ $button-shadow: 4px 4px 5px #000;
       #0f0a3c 100%
     );
   background-blend-mode: screen, overlay, hard-light, normal;
+}
+
+@mixin button-style() {
+  box-shadow: $button-shadow;
+  border: 0;
+  padding: 20px;
+  font-size: 1.5em;
+  border-radius: 20px;
+  color: $light-text-color;
 }

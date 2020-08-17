@@ -12,8 +12,10 @@ export class JoinSessionComponent implements OnInit {
   ngOnInit(): void {}
 
   joinSession(id: string) {
-    id = id.toUpperCase();
-    this.router.navigate(['session', id]);
+    if (id.length == 4) {
+      id = id.toUpperCase();
+      this.router.navigate(['session', id]);
+    }
   }
 
   inputKey(event) {

@@ -26,10 +26,13 @@ export class SessionComponent implements OnInit {
   socket: SocketIOClient.Socket;
   @ViewChild(SessionMessagesComponent)
   messagesComponent: SessionMessagesComponent;
+  currentSessionId: string;
+  sessionError: boolean = false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.joinSession(params.get('id'));
+      this.currentSessionId = params.get('id');
+      this.joinSession(this.currentSessionId);
     });
 
     this.router.events.subscribe((event: Event) => {
@@ -52,9 +55,11 @@ export class SessionComponent implements OnInit {
     this.connectService.checkSession(id).subscribe(
       () => {
         this.socketIni(this.connectService.joinSession(id));
+        this.sessionError = false;
       },
       (error) => {
         console.log('Sorry diese Session gibt es nicht :(');
+        this.sessionError = true;
       }
     );
   }

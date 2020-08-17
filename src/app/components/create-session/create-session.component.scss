@@ -3,12 +3,7 @@
 .create-session-container {
   button {
     margin: 1.5em;
-    box-shadow: $button-shadow;
-    border: 0;
     @include button-background(149deg);
-    padding: 20px;
-    font-size: 1.5em;
-    border-radius: 20px;
-    color: $light-text-color;
+    @include button-style();
   }
 }

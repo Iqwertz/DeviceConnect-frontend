@@ -39,12 +39,7 @@
   }
 
   button {
-    box-shadow: $button-shadow;
-    border: 0;
     @include button-background(320deg);
-    padding: 20px;
-    font-size: 1.5em;
-    border-radius: 20px;
-    color: $light-text-color;
+    @include button-style();
   }
 }
