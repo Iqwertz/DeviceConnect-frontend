@@ -15,6 +15,7 @@ import { SessionMessagesComponent } from './components/session-messages/session-
 import { SessionMessagesTextFieldComponent } from './components/session-messages-text-field/session-messages-text-field.component';
 import { JoinSessionComponent } from './components/join-session/join-session.component';
 import { CreateSessionComponent } from './components/create-session/create-session.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent, SessionMessagesTextFieldComponent, JoinSessionComponent, CreateSessionComponent],
@@ -26,6 +27,7 @@ import { CreateSessionComponent } from './components/create-session/create-sessi
     NgxsReduxDevtoolsPluginModule.forRoot(),
     FormsModule,
     HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [ConnectService],
   bootstrap: [AppComponent],

@@ -1,4 +1,6 @@
-<form (ngSubmit)="sendMessage(textMessage)">
-  <input [(ngModel)]="textMessage" name="msgField" autocomplete="off" />
-  <button type="submit">Send</button>
-</form>
+<div class="messages-text-field-container">
+  <form (ngSubmit)="sendMessage(textMessage)">
+    <input [(ngModel)]="textMessage" name="msgField" autocomplete="off" />
+    <button type="submit"><fa-icon [icon]="faArrowRight"></fa-icon></button>
+  </form>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-session-messages-text-field',
@@ -8,6 +9,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class SessionMessagesTextFieldComponent implements OnInit {
   textMessage: string;
   @Output() newMessageChange = new EventEmitter<string>();
+  faArrowRight = faArrowRight;
 
   constructor() {}
 
