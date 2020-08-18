@@ -1,7 +1,23 @@
-<div>
-  <ul class="messages">
-    <li *ngFor="let item of messageList">
-      {{ item }}
-    </li>
-  </ul>
+<div class="messages-parent">
+  <div class="messages-container">
+    <ul class="messages">
+      <li *ngFor="let item of messageList">
+        <div
+          class="message"
+          [ngClass]="{
+            left: item.type == 'receiver',
+            right: item.type == 'sender',
+            center: item.type == 'status'
+          }"
+        >
+          {{ item.message }}
+        </div>
+      </li>
+      <li *ngIf="reconnectError">
+        <div class="back-to-start">
+          <a href="/"><button>Back to Start</button></a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

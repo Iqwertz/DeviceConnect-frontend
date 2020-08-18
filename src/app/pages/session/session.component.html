@@ -1,5 +1,6 @@
 <div class="active-session-container" *ngIf="!sessionError">
-  <app-session-messages> </app-session-messages>
+  <app-session-messages [reconnectError]="reconnectionError">
+  </app-session-messages>
   <app-session-messages-text-field
     (newMessageChange)="sendMessage($event)"
   ></app-session-messages-text-field>

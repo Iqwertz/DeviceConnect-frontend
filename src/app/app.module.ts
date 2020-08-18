@@ -1,3 +1,4 @@
+import { AppState } from './store/app.state';
 import { ConnectService } from './services/connect.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -18,7 +19,15 @@ import { CreateSessionComponent } from './components/create-session/create-sessi
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  declarations: [AppComponent, LandingComponent, SessionComponent, SessionMessagesComponent, SessionMessagesTextFieldComponent, JoinSessionComponent, CreateSessionComponent],
+  declarations: [
+    AppComponent,
+    LandingComponent,
+    SessionComponent,
+    SessionMessagesComponent,
+    SessionMessagesTextFieldComponent,
+    JoinSessionComponent,
+    CreateSessionComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,6 +37,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
+    NgxsModule.forRoot([AppState]),
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   providers: [ConnectService],
   bootstrap: [AppComponent],

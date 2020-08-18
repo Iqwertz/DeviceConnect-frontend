@@ -1,5 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MessagesService } from '../../services/messages.service';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import {
+  MessagesService,
+  messageObject,
+} from '../../services/messages.service';
 
 @Component({
   selector: 'app-session-messages',
@@ -8,7 +11,10 @@ import { MessagesService } from '../../services/messages.service';
 })
 export class SessionMessagesComponent implements OnInit {
   constructor(private messagesService: MessagesService) {}
-  messageList: string[] = [];
+  messageList: messageObject[] = [];
+
+  @Input()
+  reconnectError: boolean = false;
 
   ngOnInit(): void {
     this.messagesService.onUpdate$.subscribe((messagesList) => {
