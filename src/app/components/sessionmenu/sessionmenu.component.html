@@ -1,0 +1,16 @@
+<div class="sidenav" [ngClass]="{ open: navOpen, close: !navOpen }">
+  <a href="javascript:void(0)" class="closebtn" (click)="navOpen = false"
+    >&times;</a
+  >
+  <div class="session-id">
+    <h2>Session Id</h2>
+    <div class="id-box-container">
+      <div class="session-id-box">{{ sessionId[0] }}</div>
+      <div class="session-id-box">{{ sessionId[1] }}</div>
+      <div class="session-id-box">{{ sessionId[2] }}</div>
+      <div class="session-id-box">{{ sessionId[3] }}</div>
+    </div>
+  </div>
+</div>
+
+<span class="open-menu" (click)="navOpen = true">&#9776;</span>

@@ -15,18 +15,20 @@
 */
 
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { SetUserId } from './app.action';
+import { SetUserId, SetSessionId } from './app.action';
 
 export type SearchType = 'gifs' | 'stickers';
 
 export interface AppStateModel {
   userId: string;
+  sessionId: string;
 }
 
 @State<AppStateModel>({
   name: 'appState',
   defaults: {
     userId: null,
+    sessionId: '0000',
   },
 })
 export class AppState {
@@ -39,6 +41,18 @@ export class AppState {
   setUserId(context: StateContext<AppStateModel>, action: SetUserId) {
     context.patchState({
       userId: action.userId,
+    });
+  }
+
+  @Selector()
+  static sessionId(state: AppStateModel) {
+    return state.sessionId;
+  }
+
+  @Action(SetSessionId)
+  setSessionId(context: StateContext<AppStateModel>, action: SetSessionId) {
+    context.patchState({
+      sessionId: action.sessionId,
     });
   }
 }

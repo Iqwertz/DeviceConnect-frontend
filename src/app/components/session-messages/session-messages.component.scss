@@ -64,13 +64,13 @@
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: $media-breakpoint-medium) {
   .messages-container {
     width: 80%;
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: $media-breakpoint-small) {
   .messages-container {
     width: 95%;
   }

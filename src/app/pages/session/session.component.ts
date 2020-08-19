@@ -15,10 +15,11 @@ import {
 } from '../../services/messages.service';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngxs/store';
-import { SetUserId } from '../../store/app.action';
+import { SetUserId, SetSessionId } from '../../store/app.action';
 
 export interface SessionInitData {
   userId: string;
+  sessionId: string;
 }
 
 @Component({
@@ -84,6 +85,7 @@ export class SessionComponent implements OnInit {
 
     this.socket.on('SessionIni', (ini: SessionInitData) => {
       this.store.dispatch(new SetUserId(ini.userId));
+      this.store.dispatch(new SetSessionId(ini.sessionId));
     });
 
     this.socket.on('disconnect', () => {
