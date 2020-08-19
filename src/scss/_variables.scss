@@ -21,7 +21,9 @@ $input-field4-color: #007ef5;
 
 $button-shadow: 4px 4px 5px #000;
 
-$message-background-color: rgb(211, 255, 218);
+$message-background-color-sender: rgb(177, 255, 190);
+$message-background-color-receiver: rgb(253, 255, 224);
+$message-background-color-status: rgb(103, 212, 255);
 
 @mixin background() {
   background-image: linear-gradient(45deg, #000850 0%, #000320 100%),

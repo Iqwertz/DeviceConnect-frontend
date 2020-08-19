@@ -38,16 +38,27 @@
 
       &.left {
         float: left;
+
+        .message {
+          background-color: $message-background-color-receiver;
+        }
       }
 
       &.right {
         float: right;
+        .message {
+          background-color: $message-background-color-sender;
+        }
       }
 
       &.center {
         text-align: center;
-        margin-left: auto;
-        margin-right: auto;
+        display: table;
+        margin: 10px auto;
+
+        .message {
+          background-color: $message-background-color-status;
+        }
       }
 
       .user-icon {
@@ -68,7 +79,6 @@
       .message {
         border-radius: 10px;
         padding: 5px 10px;
-        background-color: $message-background-color;
         box-shadow: $button-shadow;
       }
     }
