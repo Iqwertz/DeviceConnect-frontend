@@ -11,6 +11,31 @@
       <div class="session-id-box">{{ sessionId[3] }}</div>
     </div>
   </div>
+  <div class="user">
+    <h2>Active User</h2>
+    <ul>
+      <li class="list-seperator"><h3>You:</h3></li>
+      <li>
+        <div class="user-icon">
+          <img src="/assets/usericons/{{ userName }}.svg" />
+        </div>
+        <div class="user-name">
+          {{ userName }}
+        </div>
+      </li>
+      <li class="list-seperator">
+        <h3>Other:</h3>
+      </li>
+      <li *ngFor="let user of userInSession | keyvalue">
+        <div class="user-icon">
+          <img src="/assets/usericons/{{ user.value.userName }}.svg" />
+        </div>
+        <div class="user-name">
+          {{ user.value.userName }}
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <span class="open-menu" (click)="navOpen = true">&#9776;</span>
