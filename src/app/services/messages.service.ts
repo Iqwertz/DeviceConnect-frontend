@@ -3,10 +3,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../store/app.state';
 import { Select } from '@ngxs/store';
 
-export interface messageObject {
+export interface MessageObject {
   message: string;
   messageId: number;
   userId: string;
+  userName: string;
   date?: Date;
   type?: messageType;
 }
@@ -28,14 +29,14 @@ export class MessagesService {
   userId$;
   userId: string = null;
 
-  private onUpdate$$ = new BehaviorSubject<messageObject[]>([]);
-  private messages: messageObject[] = [];
+  private onUpdate$$ = new BehaviorSubject<MessageObject[]>([]);
+  private messages: MessageObject[] = [];
 
-  get onUpdate$(): Observable<messageObject[]> {
+  get onUpdate$(): Observable<MessageObject[]> {
     return this.onUpdate$$.asObservable();
   }
 
-  addMessage(msg: messageObject) {
+  addMessage(msg: MessageObject) {
     if (msg.userId === 'SERVER') {
       msg.type = 'status';
     } else if (msg.userId == this.userId) {

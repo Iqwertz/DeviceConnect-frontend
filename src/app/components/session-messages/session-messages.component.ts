@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import {
   MessagesService,
-  messageObject,
+  MessageObject,
 } from '../../services/messages.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {
 })
 export class SessionMessagesComponent implements OnInit {
   constructor(private messagesService: MessagesService) {}
-  messageList: messageObject[] = [];
+  messageList: MessageObject[] = [];
 
   @Input()
   reconnectError: boolean = false;

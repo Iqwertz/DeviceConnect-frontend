@@ -3,14 +3,22 @@
     <ul class="messages">
       <li *ngFor="let item of messageList">
         <div
-          class="message"
+          class="message-container"
           [ngClass]="{
             left: item.type == 'receiver',
             right: item.type == 'sender',
             center: item.type == 'status'
           }"
         >
-          {{ item.message }}
+          <div class="user-icon" *ngIf="item.type == 'receiver'">
+            <img src="/assets/usericons/{{ item.userName }}.svg" />
+          </div>
+          <div class="message">
+            {{ item.message }}
+          </div>
+          <div class="user-icon" *ngIf="item.type == 'sender'">
+            <img src="/assets/usericons/{{ item.userName }}.svg" />
+          </div>
         </div>
       </li>
       <li *ngIf="reconnectError">

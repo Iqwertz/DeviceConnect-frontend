@@ -8,6 +8,8 @@ $accent2: #ff6928;
 
 $accent3: rgb(153, 0, 224);
 
+$user-icon-color: linear-gradient(40.27deg, #00ffa3 0%, #9595ff 100%);
+
 @mixin button-background($angle) {
   background: linear-gradient($angle, #ff0055 0%, #00294f 90%);
 }

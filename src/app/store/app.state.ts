@@ -15,13 +15,21 @@
 */
 
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { SetUserId, SetSessionId } from './app.action';
+import {
+  SetUserId,
+  SetSessionId,
+  SetUserName,
+  SetUserInSession,
+} from './app.action';
+import { UserData } from '../pages/session/session.component';
 
 export type SearchType = 'gifs' | 'stickers';
 
 export interface AppStateModel {
   userId: string;
   sessionId: string;
+  userName: string;
+  userInSession: Map<string, UserData>;
 }
 
 @State<AppStateModel>({
@@ -29,6 +37,8 @@ export interface AppStateModel {
   defaults: {
     userId: null,
     sessionId: '0000',
+    userName: null,
+    userInSession: new Map<string, UserData>(),
   },
 })
 export class AppState {
@@ -53,6 +63,33 @@ export class AppState {
   setSessionId(context: StateContext<AppStateModel>, action: SetSessionId) {
     context.patchState({
       sessionId: action.sessionId,
+    });
+  }
+
+  @Selector()
+  static userName(state: AppStateModel) {
+    return state.userName;
+  }
+
+  @Action(SetUserName)
+  setUserName(context: StateContext<AppStateModel>, action: SetUserName) {
+    context.patchState({
+      userName: action.userName,
+    });
+  }
+
+  @Selector()
+  static userInSession(state: AppStateModel) {
+    return state.userInSession;
+  }
+
+  @Action(SetUserInSession)
+  setUserInSession(
+    context: StateContext<AppStateModel>,
+    action: SetUserInSession
+  ) {
+    context.patchState({
+      userInSession: action.userInSession,
     });
   }
 }

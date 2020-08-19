@@ -11,15 +11,26 @@ import {
 import { SessionMessagesComponent } from '../../components/session-messages/session-messages.component';
 import {
   MessagesService,
-  messageObject,
+  MessageObject,
 } from '../../services/messages.service';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngxs/store';
-import { SetUserId, SetSessionId } from '../../store/app.action';
+import {
+  SetUserId,
+  SetSessionId,
+  SetUserName,
+  SetUserInSession,
+} from '../../store/app.action';
 
 export interface SessionInitData {
   userId: string;
+  userName: string;
   sessionId: string;
+}
+
+export interface UserData {
+  userName: string;
+  userId: string;
 }
 
 @Component({
@@ -79,13 +90,21 @@ export class SessionComponent implements OnInit {
   socketIni(s: SocketIOClient.Socket) {
     this.socket = s;
 
-    this.socket.on(environment.messageIdentifier, (msg: messageObject) => {
+    this.socket.on(environment.messageIdentifier, (msg: MessageObject) => {
       this.messagesService.addMessage(msg);
     });
 
     this.socket.on('SessionIni', (ini: SessionInitData) => {
       this.store.dispatch(new SetUserId(ini.userId));
       this.store.dispatch(new SetSessionId(ini.sessionId));
+      this.store.dispatch(new SetUserName(ini.userName));
+    });
+
+    this.socket.on('newUser', (userData) => {
+      const mappedData: Map<string, UserData> = new Map<string, UserData>(
+        Object.entries(userData)
+      );
+      this.store.dispatch(new SetUserInSession(mappedData));
     });
 
     this.socket.on('disconnect', () => {
@@ -101,10 +120,11 @@ export class SessionComponent implements OnInit {
   }
 
   sendStatus(status: string) {
-    const msg: messageObject = {
+    const msg: MessageObject = {
       message: status,
       messageId: -1,
       userId: 'SERVER',
+      userName: 'Server',
     };
     this.messagesService.addMessage(msg);
   }

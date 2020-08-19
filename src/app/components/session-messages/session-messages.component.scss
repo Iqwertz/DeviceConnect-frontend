@@ -23,17 +23,18 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-flow: column;
   }
 
   .messages li {
     width: 100%;
-    height: 30px;
-
-    .message {
-      border-radius: 10px;
-      max-width: 20vw;
-      padding: 5px 10px;
-      background-color: $message-background-color;
+    height: auto;
+    .message-container {
+      margin: 10px;
+      max-width: 30vw;
+      display: flex;
+      flex-flow: row;
 
       &.left {
         float: left;
@@ -47,6 +48,28 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      .user-icon {
+        $icon-size: 2em;
+        background: $user-icon-color;
+        padding: 5px;
+        margin: 10px;
+        width: $icon-size;
+        height: $icon-size;
+        border-radius: $icon-size;
+        box-shadow: $button-shadow;
+        img {
+          width: $icon-size;
+          height: $icon-size;
+        }
+      }
+
+      .message {
+        border-radius: 10px;
+        padding: 5px 10px;
+        background-color: $message-background-color;
+        box-shadow: $button-shadow;
       }
     }
 
