@@ -1,0 +1,160 @@
+@import "./src/scss/variables";
+
+.sidenav {
+  height: 100%;
+  width: 0%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  font-family: "Dosis", sans-serif;
+
+  &.open {
+    width: 24%;
+  }
+  &.close {
+    width: 0;
+  }
+}
+
+.session-id {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  h2 {
+    color: $light-text-color;
+    font-size: 2em;
+  }
+
+  .id-box-container {
+    display: flex;
+    flex-direction: row;
+
+    .session-id-box {
+      text-transform: uppercase;
+      margin: 5px;
+      height: 1.4em;
+      width: 1em;
+      text-align: center;
+      font-size: 2.8em;
+      border: none;
+      border-radius: 15px;
+      box-shadow: $button-shadow;
+      color: $light-text-color;
+    }
+
+    .session-id-box:nth-child(1) {
+      background: $input-field1-color;
+    }
+    .session-id-box:nth-child(2) {
+      background: $input-field2-color;
+    }
+    .session-id-box:nth-child(3) {
+      background: $input-field3-color;
+    }
+    .session-id-box:nth-child(4) {
+      background: $input-field4-color;
+    }
+  }
+}
+
+.user {
+  display: flex;
+  flex-flow: column;
+  align-items: left;
+  h2 {
+    align-self: center;
+    color: $light-text-color;
+    font-size: 2em;
+  }
+
+  .list-seperator {
+    color: $light-text-color;
+  }
+
+  li {
+    list-style-type: none;
+    display: flex;
+    flex-flow: row;
+
+    .user-icon {
+      $icon-size: 2em;
+      background: $user-icon-color;
+      padding: 5px;
+      margin: 10px;
+      width: $icon-size;
+      height: $icon-size;
+      border-radius: $icon-size;
+      box-shadow: $button-shadow;
+      img {
+        width: $icon-size;
+        height: $icon-size;
+      }
+    }
+
+    .user-name {
+      height: 1.5em;
+      font-size: 1.5em;
+      border-radius: 10px;
+      margin: 7px 0;
+      padding: 5px 10px;
+      box-shadow: $button-shadow;
+      background-color: $message-background-color-sender;
+    }
+  }
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: $light-text-color;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.open-menu {
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  color: #fff;
+}
+
+@media screen and (max-width: $media-breakpoint-medium) {
+  .sidenav {
+    width: 0%;
+    &.open {
+      width: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: $media-breakpoint-small) {
+  .sidenav {
+    width: 0%;
+    padding-top: 15px;
+
+    &.open {
+      width: 100%;
+    }
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}

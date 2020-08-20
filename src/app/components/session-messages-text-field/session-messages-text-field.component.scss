@@ -8,44 +8,93 @@
   $border-radius: 15px;
 
   form {
+    display: flex;
+    align-items: row;
     margin: 15px 0;
     position: fixed;
     bottom: 0;
     width: 50%;
-  }
+    input {
+      line-height: 1.2em;
+      font-size: 1.2em;
+      border: 0;
+      padding: 10px;
+      width: 85%;
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+      box-shadow: $button-shadow;
+    }
+    .submit {
+      line-height: 1.2em;
+      font-size: 1.2em;
+      color: $light-text-color;
+      width: 11%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      box-shadow: $button-shadow;
+      @include button-background(210deg);
+    }
+    .image-upload-container {
+      text-align: center;
+      padding: 10px 0;
+      width: 2.4em;
+      line-height: 1.2em;
+      font-size: 1.2em;
+      color: $light-text-color;
+      border-radius: 100%;
+      margin: 0 5px;
+      @include button-background(100deg);
+      box-shadow: $button-shadow;
+      cursor: pointer;
 
-  form input {
-    line-height: 1.2em;
-    font-size: 1.2em;
-    border: 0;
-    padding: 10px;
-    width: 85%;
-    border-top-left-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
-    box-shadow: $button-shadow;
-  }
+      input {
+        display: none;
+      }
+    }
 
-  form button {
-    line-height: 1.2em;
-    font-size: 1.2em;
-    color: $light-text-color;
-    width: 11%;
-    background: rgb(130, 224, 255);
-    border: none;
-    padding: 10px;
-    border-top-right-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
-    box-shadow: $button-shadow;
-    @include button-background(210deg);
-  }
+    .image-preview-container {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-flow: column;
+      bottom: 0;
+      right: 10%;
+      height: 300px;
+      border: 0;
+      width: calc(85% - 1.2em);
+      border-radius: $border-radius $border-radius 0 $border-radius;
+      box-shadow: $button-shadow;
+      background-color: #fff;
+      .close {
+        border: none;
+        background-color: rgba(255, 255, 255, 0);
+        cursor: pointer;
+        font-size: 3em;
+        position: absolute;
+        top: 5px;
+        right: 20px;
+        color: rgb(255, 0, 0);
+      }
 
-  @media screen and (max-width: 1000px) {
+      img {
+        margin: 10px;
+        border-radius: $border-radius;
+        max-width: 80%;
+        max-height: 280px;
+      }
+    }
+  }
+  @media screen and (max-width: $media-breakpoint-medium) {
     form {
       width: 80%;
     }
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: $media-breakpoint-small) {
     form {
       width: 95%;
 

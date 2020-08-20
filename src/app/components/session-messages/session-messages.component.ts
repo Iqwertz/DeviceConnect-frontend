@@ -1,7 +1,15 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  Input,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import {
   MessagesService,
-  messageObject,
+  MessageObject,
 } from '../../services/messages.service';
 
 @Component({
@@ -10,8 +18,12 @@ import {
   styleUrls: ['./session-messages.component.scss'],
 })
 export class SessionMessagesComponent implements OnInit {
-  constructor(private messagesService: MessagesService) {}
-  messageList: messageObject[] = [];
+  constructor(
+    private messagesService: MessagesService,
+    private http: HttpClient
+  ) {}
+  messageList: MessageObject[] = [];
+  @ViewChild('scroll') private myScrollContainer: ElementRef;
 
   @Input()
   reconnectError: boolean = false;
@@ -19,6 +31,15 @@ export class SessionMessagesComponent implements OnInit {
   ngOnInit(): void {
     this.messagesService.onUpdate$.subscribe((messagesList) => {
       this.messageList = messagesList;
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 10);
     });
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 }

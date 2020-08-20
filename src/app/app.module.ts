@@ -17,6 +17,7 @@ import { SessionMessagesTextFieldComponent } from './components/session-messages
 import { JoinSessionComponent } from './components/join-session/join-session.component';
 import { CreateSessionComponent } from './components/create-session/create-session.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SessionmenuComponent } from './components/sessionmenu/sessionmenu.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SessionMessagesTextFieldComponent,
     JoinSessionComponent,
     CreateSessionComponent,
+    SessionmenuComponent,
   ],
   imports: [
     BrowserModule,

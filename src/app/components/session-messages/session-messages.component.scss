@@ -23,30 +23,64 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-flow: column;
   }
 
   .messages li {
     width: 100%;
-    height: 30px;
-
-    .message {
-      border-radius: 10px;
-      max-width: 20vw;
-      padding: 5px 10px;
-      background-color: $message-background-color;
+    height: auto;
+    .message-container {
+      margin: 10px;
+      max-width: 30vw;
+      display: flex;
+      flex-flow: row;
 
       &.left {
         float: left;
+
+        .message {
+          background-color: $message-background-color-receiver;
+        }
       }
 
       &.right {
         float: right;
+        .message {
+          background-color: $message-background-color-sender;
+        }
       }
 
       &.center {
         text-align: center;
-        margin-left: auto;
-        margin-right: auto;
+        display: table;
+        margin: 10px auto;
+
+        .message {
+          background-color: $message-background-color-status;
+        }
+      }
+
+      .user-icon {
+        $icon-size: 2em;
+        background: $user-icon-color;
+        padding: 5px;
+        margin: 10px;
+        width: $icon-size;
+        height: $icon-size;
+        border-radius: $icon-size;
+        box-shadow: $button-shadow;
+        img {
+          width: $icon-size;
+          height: $icon-size;
+        }
+      }
+
+      .message {
+        min-height: 1.4em;
+        border-radius: 10px;
+        padding: 5px 10px;
+        box-shadow: $button-shadow;
       }
     }
 
@@ -64,13 +98,13 @@
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: $media-breakpoint-medium) {
   .messages-container {
     width: 80%;
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: $media-breakpoint-small) {
   .messages-container {
     width: 95%;
   }
