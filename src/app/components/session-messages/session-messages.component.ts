@@ -30,6 +30,7 @@ export class SessionMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messagesService.onUpdate$.subscribe((messagesList) => {
+      console.log(this.messageList);
       this.messageList = messagesList;
       setTimeout(() => {
         this.scrollToBottom();

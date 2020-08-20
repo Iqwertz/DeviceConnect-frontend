@@ -3,11 +3,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../store/app.state';
 import { Select } from '@ngxs/store';
 
+export type ContentType = 'Picture' | 'Text';
+
 export interface MessageObject {
   message: string;
   messageId: number;
   userId: string;
   userName: string;
+  contentType: ContentType;
   date?: Date;
   type?: messageType;
 }

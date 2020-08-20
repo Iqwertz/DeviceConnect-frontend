@@ -1,3 +1,4 @@
+import { ContentType } from './../../services/messages.service';
 import { ConnectService } from './../../services/connect.service';
 import { Component, OnInit, ViewChild, ɵɵviewQuery } from '@angular/core';
 import {
@@ -26,6 +27,11 @@ export interface SessionInitData {
   userId: string;
   userName: string;
   sessionId: string;
+}
+
+export interface SendMessageObject {
+  message: string;
+  contentType: ContentType;
 }
 
 export interface UserData {
@@ -125,11 +131,12 @@ export class SessionComponent implements OnInit {
       messageId: -1,
       userId: 'SERVER',
       userName: 'Server',
+      contentType: 'Text',
     };
     this.messagesService.addMessage(msg);
   }
 
-  sendMessage(msg: string) {
+  sendMessage(msg: SendMessageObject) {
     this.socket.emit(environment.messageIdentifier, msg);
   }
 }

@@ -1,3 +1,4 @@
+import { SendMessageObject } from './../../pages/session/session.component';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { faArrowRight, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
@@ -9,30 +10,44 @@ import { environment } from '../../../environments/environment';
 })
 export class SessionMessagesTextFieldComponent implements OnInit {
   textMessage: string;
-  @Output() newMessageChange = new EventEmitter<string>();
+  @Output() newMessageChange = new EventEmitter<SendMessageObject>();
   faArrowRight = faArrowRight;
   faCamera = faCamera;
 
   ///Image Upload
   imageError: string;
   isImageSaved: boolean;
-  cardImageBase64: string;
+  cardImageBase64: string = '';
 
   constructor() {}
 
   ngOnInit(): void {}
 
   sendMessage(msg: string) {
-    if (msg.length > 0) {
-      if (msg.length <= environment.maxMessageLength) {
-        this.textMessage = '';
-        this.newMessageChange.emit(msg);
-      } else {
-        alert(
-          'The Message is longer than the permitted amount of ' +
-            environment.maxMessageLength +
-            ' chars'
-        );
+    if (this.cardImageBase64.length > 1) {
+      this.textMessage = '';
+      const message: SendMessageObject = {
+        message: this.cardImageBase64,
+        contentType: 'Picture',
+      };
+      this.newMessageChange.emit(message);
+      this.deleteImage();
+    } else {
+      if (msg.length > 0) {
+        if (msg.length <= environment.maxMessageLength) {
+          this.textMessage = '';
+          const message: SendMessageObject = {
+            message: msg,
+            contentType: 'Text',
+          };
+          this.newMessageChange.emit(message);
+        } else {
+          alert(
+            'The Message is longer than the permitted amount of ' +
+              environment.maxMessageLength +
+              ' chars'
+          );
+        }
       }
     }
   }
