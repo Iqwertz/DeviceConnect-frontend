@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  socketEndpoint: 'http://localhost:3000',
+  socketEndpoint: 'http://localhost:4269', //'http://172.16.40.80:4269', //http://localhost:3000
   messageIdentifier: 'chat message',
+  maxMessageLength: 5000, //in chars
   reconnectSettings: {
     reconnection: true,
     reconnectionDelay: 500,

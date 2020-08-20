@@ -20,7 +20,7 @@ export class JoinSessionComponent implements OnInit {
 
   inputKey(event) {
     if (event.key === 'Backspace') {
-      let element = event.srcElement.previousElementSibling; // get the sibling element
+      let element = event.srcElement.previousElementSibling; //get the sibling element
 
       if (element == null) {
         // check if its null

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import {
   Component,
   OnInit,
@@ -17,7 +18,10 @@ import {
   styleUrls: ['./session-messages.component.scss'],
 })
 export class SessionMessagesComponent implements OnInit {
-  constructor(private messagesService: MessagesService) {}
+  constructor(
+    private messagesService: MessagesService,
+    private http: HttpClient
+  ) {}
   messageList: MessageObject[] = [];
   @ViewChild('scroll') private myScrollContainer: ElementRef;
 
