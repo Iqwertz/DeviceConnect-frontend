@@ -68,7 +68,8 @@
       width: calc(85% - 1.2em);
       border-radius: $border-radius $border-radius 0 $border-radius;
       box-shadow: $button-shadow;
-      background-color: #fff;
+      @include picture-message-background();
+
       .close {
         border: none;
         background-color: rgba(255, 255, 255, 0);
@@ -81,6 +82,7 @@
       }
 
       img {
+        box-shadow: $button-shadow;
         margin: 10px;
         border-radius: $border-radius;
         max-width: 80%;

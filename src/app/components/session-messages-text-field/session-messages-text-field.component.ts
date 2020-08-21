@@ -58,19 +58,20 @@ export class SessionMessagesTextFieldComponent implements OnInit {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
-      const max_size = 20971520;
-      const allowed_types = ['image/png', 'image/jpeg'];
-      const max_height = 15200;
-      const max_width = 25600;
+      const max_size = environment.pictureLimits.maxSize;
+      const allowed_types = environment.pictureLimits.allowedTypes;
+      const max_height = environment.pictureLimits.maxHeight;
+      const max_width = environment.pictureLimits.maxWidth;
 
       if (fileInput.target.files[0].size > max_size) {
         this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-
+        alert(this.imageError);
         return false;
       }
       console.log(fileInput.target.files[0].type);
       if (!allowed_types.includes(fileInput.target.files[0].type)) {
         this.imageError = 'Only Images are allowed ( JPG | PNG )';
+        alert(this.imageError);
         return false;
       }
       const reader = new FileReader();
@@ -90,6 +91,7 @@ export class SessionMessagesTextFieldComponent implements OnInit {
               '*' +
               max_width +
               'px';
+            alert(this.imageError);
             return false;
           } else {
             const imgBase64Path = e.target.result;
