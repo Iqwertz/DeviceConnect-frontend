@@ -13,8 +13,11 @@
           <div class="user-icon" *ngIf="item.type == 'receiver'">
             <img src="/assets/usericons/{{ item.userName }}.svg" />
           </div>
-          <div class="message">
+          <div *ngIf="item.contentType == 'Text'" class="message">
             {{ item.message }}
+          </div>
+          <div *ngIf="item.contentType == 'Picture'" class="picture">
+            <img [src]="item.message" />
           </div>
           <div class="user-icon" *ngIf="item.type == 'sender'">
             <img src="/assets/usericons/{{ item.userName }}.svg" />

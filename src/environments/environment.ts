@@ -13,6 +13,12 @@ export const environment = {
     reconnectionDelayMax: 5000,
     reconnectionAttempts: 5,
   },
+  pictureLimits: {
+    maxSize: 10485760, //10Mb (in bytes)
+    allowedTypes: ['image/png', 'image/jpeg'],
+    maxHeight: 15200,
+    maxWidth: 25600,
+  },
 };
 
 /*

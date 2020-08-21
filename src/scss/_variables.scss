@@ -24,6 +24,34 @@ $button-shadow: 4px 4px 5px #000;
 $message-background-color-sender: rgb(177, 255, 190);
 $message-background-color-receiver: rgb(253, 255, 224);
 $message-background-color-status: rgb(103, 212, 255);
+@mixin picture-message-background() {
+  background: radial-gradient(100% 225% at 100% 0%, #120037 0%, #000000 100%),
+    linear-gradient(35deg, #c0ffc7 0%, #17001f 75%),
+    linear-gradient(55deg, #2400ff 0%, #000000 100%),
+    linear-gradient(
+      90deg,
+      #ffe037 0%,
+      #ffe037 40%,
+      #1dcd9f 40%,
+      #1dcd9f 50%,
+      #088c6f 50%,
+      #088c6f 70%,
+      #23033c 70%,
+      #23033c 100%
+    ),
+    linear-gradient(
+      180deg,
+      #ff8fe5 0%,
+      #ff8fe5 45%,
+      #fbff64 45%,
+      #fbff64 60%,
+      #76e3ff 60%,
+      #76e3ff 80%,
+      #6eb6e7 80%,
+      #6eb6e7 100%
+    );
+  background-blend-mode: screen, overlay, overlay, darken, normal;
+}
 
 @mixin background() {
   background-image: linear-gradient(45deg, #000850 0%, #000320 100%),
