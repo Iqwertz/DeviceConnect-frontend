@@ -1,6 +1,14 @@
+import {
+  imageResult,
+  FileHandlerService,
+} from './../../services/file-handler.service';
 import { SendMessageObject } from './../../pages/session/session.component';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { faArrowRight, faCamera } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRight,
+  faCamera,
+  faFile,
+} from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -13,21 +21,23 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   @Output() newMessageChange = new EventEmitter<SendMessageObject>();
   faArrowRight = faArrowRight;
   faCamera = faCamera;
+  faFile = faFile;
 
-  ///Image Upload
-  imageError: string;
-  isImageSaved: boolean;
-  cardImageBase64: string = '';
+  imageData: imageResult = {
+    cardImageBase64: '',
+    imageError: '',
+    isImageSaved: false,
+  };
 
-  constructor() {}
+  constructor(private fileHandlerService: FileHandlerService) {}
 
   ngOnInit(): void {}
 
   sendMessage(msg: string) {
-    if (this.cardImageBase64.length > 1) {
+    if (this.imageData.cardImageBase64.length > 1) {
       this.textMessage = '';
       const message: SendMessageObject = {
-        message: this.cardImageBase64,
+        message: this.imageData.cardImageBase64,
         contentType: 'Picture',
       };
       this.newMessageChange.emit(message);
@@ -55,60 +65,14 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   //Image Upload
   ///Image Upload:
   fileChangeEvent(fileInput: any) {
-    this.imageError = null;
-    if (fileInput.target.files && fileInput.target.files[0]) {
-      // Size Filter Bytes
-      const max_size = environment.pictureLimits.maxSize;
-      const allowed_types = environment.pictureLimits.allowedTypes;
-      const max_height = environment.pictureLimits.maxHeight;
-      const max_width = environment.pictureLimits.maxWidth;
-
-      if (fileInput.target.files[0].size > max_size) {
-        this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-        alert(this.imageError);
-        return false;
-      }
-      console.log(fileInput.target.files[0].type);
-      if (!allowed_types.includes(fileInput.target.files[0].type)) {
-        this.imageError = 'Only Images are allowed ( JPG | PNG )';
-        alert(this.imageError);
-        return false;
-      }
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;
-        image.onload = (rs) => {
-          const img_height = rs.currentTarget['height'];
-          const img_width = rs.currentTarget['width'];
-
-          console.log(img_height, img_width);
-
-          if (img_height > max_height && img_width > max_width) {
-            this.imageError =
-              'Maximum dimentions allowed ' +
-              max_height +
-              '*' +
-              max_width +
-              'px';
-            alert(this.imageError);
-            return false;
-          } else {
-            const imgBase64Path = e.target.result;
-            this.cardImageBase64 = imgBase64Path;
-            this.isImageSaved = true;
-            // this.previewImagePath = imgBase64Path;
-          }
-        };
-      };
-
-      reader.readAsDataURL(fileInput.target.files[0]);
-    }
+    this.fileHandlerService.fileImageHandler(fileInput).subscribe((result) => {
+      this.imageData = result;
+    });
   }
 
   deleteImage() {
-    this.imageError = '';
-    this.cardImageBase64 = '';
-    this.isImageSaved = false;
+    this.imageData.imageError = '';
+    this.imageData.cardImageBase64 = '';
+    this.imageData.isImageSaved = false;
   }
 }

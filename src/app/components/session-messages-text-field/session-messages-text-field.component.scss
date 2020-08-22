@@ -37,7 +37,8 @@
       box-shadow: $button-shadow;
       @include button-background(210deg);
     }
-    .image-upload-container {
+    //.image
+    .upload-container {
       text-align: center;
       padding: 10px 0;
       width: 2.4em;
@@ -65,7 +66,7 @@
       right: 10%;
       height: 300px;
       border: 0;
-      width: calc(85% - 1.2em);
+      width: calc(85% - 3.3em);
       border-radius: $border-radius $border-radius 0 $border-radius;
       box-shadow: $button-shadow;
       @include picture-message-background();
