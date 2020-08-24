@@ -1,17 +1,20 @@
 <div class="messages-text-field-container">
   <form (ngSubmit)="sendMessage(textMessage)">
     <label class="document upload-container">
-      <input type="file" (change)="fileChangeEvent($event)" />
+      <input type="file" (change)="fileChangeEvent($event, 'document')" />
       <fa-icon [icon]="faFile"> </fa-icon>
     </label>
     <label class="image upload-container">
-      <input type="file" (change)="fileChangeEvent($event)" />
+      <input type="file" (change)="fileChangeEvent($event, 'picture')" />
       <fa-icon [icon]="faCamera"> </fa-icon>
     </label>
     <input [(ngModel)]="textMessage" name="msgField" autocomplete="off" />
-    <div *ngIf="imageData.isImageSaved" class="image-preview-container">
+    <div
+      *ngIf="fileData.isSaved && fileData.type == 'picture'"
+      class="image-preview-container"
+    >
       <button (click)="deleteImage()" class="close">&times;</button>
-      <img [src]="imageData.cardImageBase64" />
+      <img [src]="fileData.dataBase64" />
     </div>
     <button class="submit" type="submit">
       <fa-icon [icon]="faArrowRight"></fa-icon>

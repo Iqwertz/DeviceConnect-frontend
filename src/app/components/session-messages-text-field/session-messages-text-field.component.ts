@@ -1,6 +1,7 @@
 import {
-  imageResult,
+  fileResult,
   FileHandlerService,
+  FileType,
 } from './../../services/file-handler.service';
 import { SendMessageObject } from './../../pages/session/session.component';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
@@ -23,10 +24,12 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   faCamera = faCamera;
   faFile = faFile;
 
-  imageData: imageResult = {
-    cardImageBase64: '',
-    imageError: '',
-    isImageSaved: false,
+  fileData: fileResult = {
+    dataBase64: '',
+    error: '',
+    isSaved: false,
+    name: '',
+    type: 'document',
   };
 
   constructor(private fileHandlerService: FileHandlerService) {}
@@ -34,10 +37,10 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   ngOnInit(): void {}
 
   sendMessage(msg: string) {
-    if (this.imageData.cardImageBase64.length > 1) {
+    if (this.fileData.dataBase64.length > 1) {
       this.textMessage = '';
       const message: SendMessageObject = {
-        message: this.imageData.cardImageBase64,
+        message: this.fileData.dataBase64,
         contentType: 'Picture',
       };
       this.newMessageChange.emit(message);
@@ -64,15 +67,21 @@ export class SessionMessagesTextFieldComponent implements OnInit {
 
   //Image Upload
   ///Image Upload:
-  fileChangeEvent(fileInput: any) {
-    this.fileHandlerService.fileImageHandler(fileInput).subscribe((result) => {
-      this.imageData = result;
-    });
+  fileChangeEvent(fileInput: any, fileType: FileType) {
+    this.fileHandlerService
+      .fileImageHandler(fileInput, fileType)
+      .subscribe((result) => {
+        console.log(result.name);
+        this.fileData = result;
+        if (this.fileData.error.length > 0) {
+          alert(this.fileData.error);
+        }
+      });
   }
 
   deleteImage() {
-    this.imageData.imageError = '';
-    this.imageData.cardImageBase64 = '';
-    this.imageData.isImageSaved = false;
+    this.fileData.error = '';
+    this.fileData.dataBase64 = '';
+    this.fileData.isSaved = false;
   }
 }
