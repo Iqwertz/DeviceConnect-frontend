@@ -9,6 +9,7 @@ import {
   faArrowRight,
   faCamera,
   faFile,
+  faFileAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
 
@@ -23,13 +24,14 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   faArrowRight = faArrowRight;
   faCamera = faCamera;
   faFile = faFile;
+  faFileAlt = faFileAlt;
 
   fileData: fileResult = {
     dataBase64: '',
     error: '',
     isSaved: false,
     name: '',
-    type: 'document',
+    type: 'Document',
   };
 
   constructor(private fileHandlerService: FileHandlerService) {}
@@ -40,17 +42,19 @@ export class SessionMessagesTextFieldComponent implements OnInit {
     if (this.fileData.dataBase64.length > 1) {
       this.textMessage = '';
       const message: SendMessageObject = {
-        message: this.fileData.dataBase64,
-        contentType: 'Picture',
+        message: this.fileData.name,
+        base64Data: this.fileData.dataBase64,
+        contentType: this.fileData.type,
       };
       this.newMessageChange.emit(message);
-      this.deleteImage();
+      this.deleteFile();
     } else {
       if (msg.length > 0) {
         if (msg.length <= environment.maxMessageLength) {
           this.textMessage = '';
           const message: SendMessageObject = {
             message: msg,
+            base64Data: '',
             contentType: 'Text',
           };
           this.newMessageChange.emit(message);
@@ -79,9 +83,11 @@ export class SessionMessagesTextFieldComponent implements OnInit {
       });
   }
 
-  deleteImage() {
+  deleteFile() {
     this.fileData.error = '';
     this.fileData.dataBase64 = '';
     this.fileData.isSaved = false;
+    this.fileData.name = '';
+    this.fileData.type = 'Document';
   }
 }

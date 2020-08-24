@@ -17,7 +17,20 @@
             {{ item.message }}
           </div>
           <div *ngIf="item.contentType == 'Picture'" class="picture">
-            <img [src]="item.message" />
+            <img [src]="item.base64Data" />
+          </div>
+          <div *ngIf="item.contentType == 'Document'" class="document">
+            <span
+              ><div
+                (click)="downloadFileFromId(item.messageId)"
+                class="doc-icon"
+              >
+                <fa-icon [icon]="faDownload"></fa-icon>
+              </div>
+              <div class="file-name">
+                {{ item.message }}
+              </div>
+            </span>
           </div>
           <div class="user-icon" *ngIf="item.type == 'sender'">
             <img src="/assets/usericons/{{ item.userName }}.svg" />

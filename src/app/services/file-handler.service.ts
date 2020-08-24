@@ -10,7 +10,7 @@ export interface fileResult {
   type: FileType;
 }
 
-export type FileType = 'picture' | 'document';
+export type FileType = 'Picture' | 'Document';
 
 @Injectable({
   providedIn: 'root',
@@ -34,13 +34,13 @@ export class FileHandlerService {
       let forbidden_types;
       let max_height;
       let max_width;
-      if (fileType == 'picture') {
+      if (fileType == 'Picture') {
         // Size Filter Bytes
         max_size = environment.pictureLimits.maxSize;
         allowed_types = environment.pictureLimits.allowedTypes;
         max_height = environment.pictureLimits.maxHeight;
         max_width = environment.pictureLimits.maxWidth;
-      } else if (fileType == 'document') {
+      } else if (fileType == 'Document') {
         max_size = environment.fileLimits.maxSize;
         forbidden_types = environment.fileLimits.forbiddenTypes;
       }
@@ -53,7 +53,7 @@ export class FileHandlerService {
         });
       }
 
-      if (fileType == 'picture') {
+      if (fileType == 'Picture') {
         if (!allowed_types.includes(fileInput.target.files[0].type)) {
           results.error = `Only these FileTypes are allowd: ( ${allowed_types.toString()} )`;
           return Observable.create((observer) => {
@@ -61,7 +61,7 @@ export class FileHandlerService {
             observer.complete();
           });
         }
-      } else if (fileType == 'document') {
+      } else if (fileType == 'Document') {
         if (forbidden_types.includes(fileInput.target.files[0].type)) {
           results.error = `Sorry these file types are forbidden: ( ${allowed_types.toString()} )`;
           return Observable.create((observer) => {
@@ -76,7 +76,7 @@ export class FileHandlerService {
       const reader = new FileReader();
       return Observable.create((observer) => {
         reader.onload = (e: any) => {
-          if (fileType == 'picture') {
+          if (fileType == 'Picture') {
             const image = new Image();
             image.src = e.target.result;
             image.onload = (rs) => {
@@ -100,7 +100,7 @@ export class FileHandlerService {
                 observer.complete();
               }
             };
-          } else if (fileType == 'document') {
+          } else if (fileType == 'Document') {
             results.dataBase64 = e.target.result;
             results.isSaved = true;
             observer.next(results);

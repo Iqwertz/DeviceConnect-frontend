@@ -28,6 +28,7 @@
   }
 
   .messages li {
+    font-family: $font;
     width: 100%;
     height: auto;
     .message-container {
@@ -39,6 +40,7 @@
       &.left {
         float: left;
 
+        .document,
         .message,
         .picture {
           background-color: $message-background-color-receiver;
@@ -47,6 +49,7 @@
 
       &.right {
         float: right;
+        .document,
         .message,
         .picture {
           background-color: $message-background-color-sender;
@@ -83,6 +86,7 @@
         border-radius: 10px;
         padding: 5px 10px;
         box-shadow: $button-shadow;
+        text-align: center;
       }
 
       .picture {
@@ -99,6 +103,39 @@
           border-radius: 10px;
           max-height: 400px;
           max-width: 90%;
+        }
+      }
+
+      .document {
+        height: 2em;
+        font-size: 1.6em;
+        border-radius: 10px;
+        padding: 5px 5px;
+        box-shadow: $button-shadow;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        span {
+          display: flex;
+          flex-flow: row;
+          .doc-icon {
+            @include download-button-background();
+            width: 1.7em;
+            height: 1.7em;
+            border-radius: 2em;
+            line-height: 1.7em;
+            text-align: center;
+            margin: 0 5px;
+            color: $light-text-color;
+          }
+          .file-name {
+            height: 1.7em;
+            line-height: 1.7em;
+            margin-right: 10px;
+          }
         }
       }
     }
