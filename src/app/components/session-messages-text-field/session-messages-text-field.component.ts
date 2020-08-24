@@ -1,6 +1,16 @@
+import {
+  fileResult,
+  FileHandlerService,
+  FileType,
+} from './../../services/file-handler.service';
 import { SendMessageObject } from './../../pages/session/session.component';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { faArrowRight, faCamera } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRight,
+  faCamera,
+  faFile,
+  faFileAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -13,31 +23,38 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   @Output() newMessageChange = new EventEmitter<SendMessageObject>();
   faArrowRight = faArrowRight;
   faCamera = faCamera;
+  faFile = faFile;
+  faFileAlt = faFileAlt;
 
-  ///Image Upload
-  imageError: string;
-  isImageSaved: boolean;
-  cardImageBase64: string = '';
+  fileData: fileResult = {
+    dataBase64: '',
+    error: '',
+    isSaved: false,
+    name: '',
+    type: 'Document',
+  };
 
-  constructor() {}
+  constructor(private fileHandlerService: FileHandlerService) {}
 
   ngOnInit(): void {}
 
   sendMessage(msg: string) {
-    if (this.cardImageBase64.length > 1) {
+    if (this.fileData.dataBase64.length > 1) {
       this.textMessage = '';
       const message: SendMessageObject = {
-        message: this.cardImageBase64,
-        contentType: 'Picture',
+        message: this.fileData.name,
+        base64Data: this.fileData.dataBase64,
+        contentType: this.fileData.type,
       };
       this.newMessageChange.emit(message);
-      this.deleteImage();
+      this.deleteFile();
     } else {
       if (msg.length > 0) {
         if (msg.length <= environment.maxMessageLength) {
           this.textMessage = '';
           const message: SendMessageObject = {
             message: msg,
+            base64Data: '',
             contentType: 'Text',
           };
           this.newMessageChange.emit(message);
@@ -54,61 +71,23 @@ export class SessionMessagesTextFieldComponent implements OnInit {
 
   //Image Upload
   ///Image Upload:
-  fileChangeEvent(fileInput: any) {
-    this.imageError = null;
-    if (fileInput.target.files && fileInput.target.files[0]) {
-      // Size Filter Bytes
-      const max_size = environment.pictureLimits.maxSize;
-      const allowed_types = environment.pictureLimits.allowedTypes;
-      const max_height = environment.pictureLimits.maxHeight;
-      const max_width = environment.pictureLimits.maxWidth;
-
-      if (fileInput.target.files[0].size > max_size) {
-        this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-        alert(this.imageError);
-        return false;
-      }
-      console.log(fileInput.target.files[0].type);
-      if (!allowed_types.includes(fileInput.target.files[0].type)) {
-        this.imageError = 'Only Images are allowed ( JPG | PNG )';
-        alert(this.imageError);
-        return false;
-      }
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;
-        image.onload = (rs) => {
-          const img_height = rs.currentTarget['height'];
-          const img_width = rs.currentTarget['width'];
-
-          console.log(img_height, img_width);
-
-          if (img_height > max_height && img_width > max_width) {
-            this.imageError =
-              'Maximum dimentions allowed ' +
-              max_height +
-              '*' +
-              max_width +
-              'px';
-            alert(this.imageError);
-            return false;
-          } else {
-            const imgBase64Path = e.target.result;
-            this.cardImageBase64 = imgBase64Path;
-            this.isImageSaved = true;
-            // this.previewImagePath = imgBase64Path;
-          }
-        };
-      };
-
-      reader.readAsDataURL(fileInput.target.files[0]);
-    }
+  fileChangeEvent(fileInput: any, fileType: FileType) {
+    this.fileHandlerService
+      .fileImageHandler(fileInput, fileType)
+      .subscribe((result) => {
+        console.log(result.name);
+        this.fileData = result;
+        if (this.fileData.error.length > 0) {
+          alert(this.fileData.error);
+        }
+      });
   }
 
-  deleteImage() {
-    this.imageError = '';
-    this.cardImageBase64 = '';
-    this.isImageSaved = false;
+  deleteFile() {
+    this.fileData.error = '';
+    this.fileData.dataBase64 = '';
+    this.fileData.isSaved = false;
+    this.fileData.name = '';
+    this.fileData.type = 'Document';
   }
 }

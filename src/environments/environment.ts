@@ -19,6 +19,10 @@ export const environment = {
     maxHeight: 15200,
     maxWidth: 25600,
   },
+  fileLimits: {
+    maxSize: 104857600, //100Mb (in bytes)
+    forbiddenTypes: [],
+  },
 };
 
 /*

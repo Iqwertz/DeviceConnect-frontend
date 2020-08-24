@@ -31,6 +31,7 @@ export interface SessionInitData {
 
 export interface SendMessageObject {
   message: string;
+  base64Data: string;
   contentType: ContentType;
 }
 
@@ -132,6 +133,7 @@ export class SessionComponent implements OnInit {
       userId: 'SERVER',
       userName: 'Server',
       contentType: 'Text',
+      base64Data: '',
     };
     this.messagesService.addMessage(msg);
   }

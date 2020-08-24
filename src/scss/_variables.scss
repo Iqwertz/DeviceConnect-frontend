@@ -8,6 +8,8 @@ $accent2: #ff6928;
 
 $accent3: rgb(153, 0, 224);
 
+$font: "Dosis", sans-serif;
+
 $user-icon-color: linear-gradient(40.27deg, #00ffa3 0%, #9595ff 100%);
 
 @mixin button-background($angle) {
@@ -24,6 +26,16 @@ $button-shadow: 4px 4px 5px #000;
 $message-background-color-sender: rgb(177, 255, 190);
 $message-background-color-receiver: rgb(253, 255, 224);
 $message-background-color-status: rgb(103, 212, 255);
+
+@mixin download-button-background() {
+  background: linear-gradient(238.72deg, #0044a9 0%, #f700a3 100%),
+    radial-gradient(100% 188.01% at 76.14% 0%, #43ddff 0%, #ff0000 100%),
+    linear-gradient(0deg, #db00ff 0%, #14ff00 100%),
+    radial-gradient(59.2% 100% at 50% 100%, #6a00d5 0%, #00e0ff 100%),
+    radial-gradient(100% 148.07% at 0% 0%, #ff9900 0%, #001aff 100%);
+  background-blend-mode: hard-light, overlay, color-burn, color-burn, normal;
+}
+
 @mixin picture-message-background() {
   background: radial-gradient(100% 225% at 100% 0%, #120037 0%, #000000 100%),
     linear-gradient(35deg, #c0ffc7 0%, #17001f 75%),

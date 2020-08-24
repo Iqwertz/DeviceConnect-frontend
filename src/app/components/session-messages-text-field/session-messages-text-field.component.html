@@ -1,13 +1,30 @@
 <div class="messages-text-field-container">
   <form (ngSubmit)="sendMessage(textMessage)">
-    <label class="image-upload-container">
-      <input type="file" (change)="fileChangeEvent($event)" />
+    <label class="document upload-container">
+      <input type="file" (change)="fileChangeEvent($event, 'Document')" />
+      <fa-icon [icon]="faFile"> </fa-icon>
+    </label>
+    <label class="image upload-container">
+      <input type="file" (change)="fileChangeEvent($event, 'Picture')" />
       <fa-icon [icon]="faCamera"> </fa-icon>
     </label>
     <input [(ngModel)]="textMessage" name="msgField" autocomplete="off" />
-    <div *ngIf="isImageSaved" class="image-preview-container">
-      <button (click)="deleteImage()" class="close">&times;</button>
-      <img [src]="cardImageBase64" />
+    <div
+      *ngIf="fileData.isSaved && fileData.type == 'Picture'"
+      class="image preview-container"
+    >
+      <button (click)="deleteFile()" class="close">&times;</button>
+      <img [src]="fileData.dataBase64" />
+    </div>
+    <div
+      *ngIf="fileData.isSaved && fileData.type == 'Document'"
+      class="document preview-container"
+    >
+      <button (click)="deleteFile()" class="close">&times;</button>
+      <fa-icon [icon]="faFileAlt"></fa-icon>
+      <div class="document-name">
+        {{ fileData.name }}
+      </div>
     </div>
     <button class="submit" type="submit">
       <fa-icon [icon]="faArrowRight"></fa-icon>
