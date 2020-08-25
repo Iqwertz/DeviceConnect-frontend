@@ -18,6 +18,7 @@ import { JoinSessionComponent } from './components/join-session/join-session.com
 import { CreateSessionComponent } from './components/create-session/create-session.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SessionmenuComponent } from './components/sessionmenu/sessionmenu.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SessionmenuComponent } from './components/sessionmenu/sessionmenu.compo
     JoinSessionComponent,
     CreateSessionComponent,
     SessionmenuComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

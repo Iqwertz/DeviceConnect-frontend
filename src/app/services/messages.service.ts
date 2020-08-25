@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, Sanitizer } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../store/app.state';
 import { Select } from '@ngxs/store';
@@ -48,6 +48,9 @@ export class MessagesService {
     } else {
       msg.type = 'receiver';
     }
+    if (msg.contentType == 'Text') {
+      msg = this.formatLink(msg);
+    }
     this.messages.push(msg);
     this.onUpdate$$.next(this.messages);
   }
@@ -59,5 +62,27 @@ export class MessagesService {
 
   ngOnDestroy() {
     this.onUpdate$$.complete();
+  }
+
+  private formatLink(msg: MessageObject): MessageObject {
+    const text: string = msg.message;
+    if (this.isUrl(text)) {
+      msg.message = `<a href="${text}" target="_blank">${text}</a>`;
+    }
+    console.log(msg.message);
+    return msg;
+  }
+
+  private isUrl(url: string): boolean {
+    var pattern = new RegExp(
+      '^(https?:\\/\\/)?' + // https protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
+      'i'
+    ); // fragment locator
+    return !!pattern.test(url);
   }
 }
