@@ -101,11 +101,28 @@
         border-radius: 10px;
         padding: 5px 5px;
         box-shadow: $button-shadow;
+        position: relative;
 
+        .download-icon {
+          font-size: 1.5em;
+          top: 2.4em;
+          left: calc(-2em - 10px);
+          position: absolute;
+          @include download-button-background();
+          width: 1.9em;
+          height: 1.9em;
+          border-radius: 100%;
+          line-height: 1.9em;
+          text-align: center;
+          margin: 0 5px;
+          color: $light-text-color;
+          box-shadow: $button-shadow;
+        }
         img {
           border-radius: 10px;
           max-height: 400px;
           max-width: 90%;
+          margin: 5px;
         }
       }
 

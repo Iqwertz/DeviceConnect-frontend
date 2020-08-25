@@ -25,7 +25,6 @@ export class UseralertComponent implements OnInit {
       this.alertText = alert.alert;
       this.alertOpen = true;
       this.alertType = alert.type;
-      console.log(this.alertType);
       this.timeout = setTimeout(() => {
         this.closeAlert();
       }, this.timeoutDelay);

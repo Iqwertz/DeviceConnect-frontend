@@ -75,7 +75,6 @@ export class SessionMessagesTextFieldComponent implements OnInit {
     this.fileHandlerService
       .fileImageHandler(fileInput, fileType)
       .subscribe((result) => {
-        console.log(result.name);
         this.fileData = result;
         if (this.fileData.error.length > 0) {
           alert(this.fileData.error);

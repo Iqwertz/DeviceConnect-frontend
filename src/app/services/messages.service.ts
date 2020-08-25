@@ -69,7 +69,6 @@ export class MessagesService {
     if (this.isUrl(text)) {
       msg.message = `<a href="${text}" target="_blank">${text}</a>`;
     }
-    console.log(msg.message);
     return msg;
   }
 
