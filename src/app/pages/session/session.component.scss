@@ -1,6 +1,16 @@
 @import "./src/scss/variables";
 @import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
 
+.site-name {
+  position: absolute;
+  top: 15px;
+  left: 25px;
+  text-decoration: none;
+  color: $light-text-color;
+  font-size: 2em;
+  font-family: $font;
+}
+
 .session-error-container {
   display: flex;
   flex-flow: column;
