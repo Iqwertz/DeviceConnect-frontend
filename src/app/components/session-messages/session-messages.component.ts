@@ -12,6 +12,9 @@ import {
   MessageObject,
 } from '../../services/messages.service';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { messageType } from '../../services/messages.service';
+import { UseralertComponent } from '../useralert/useralert.component';
+import { UserAlertService } from '../../services/user-alert.service';
 
 @Component({
   selector: 'app-session-messages',
@@ -21,6 +24,7 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 export class SessionMessagesComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
+    private uAlert: UserAlertService,
     private http: HttpClient
   ) {}
   messageList: MessageObject[] = [];
@@ -54,6 +58,27 @@ export class SessionMessagesComponent implements OnInit {
         let url = window.URL.createObjectURL(res);
         this.download(messageData.message, url);
       });
+  }
+
+  textMessageClicked(type: messageType, text: string) {
+    if (type != 'status') {
+      this.copyStringToClipboard(text);
+    }
+  }
+
+  private copyStringToClipboard(str: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = str;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.uAlert.setUserAlert('Successfully copied to clipboard', 'success');
   }
 
   private download(file: string, blobdata) {

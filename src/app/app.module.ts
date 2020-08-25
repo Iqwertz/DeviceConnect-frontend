@@ -19,6 +19,7 @@ import { CreateSessionComponent } from './components/create-session/create-sessi
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SessionmenuComponent } from './components/sessionmenu/sessionmenu.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { UseralertComponent } from './components/useralert/useralert.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SafePipe } from './pipes/safe.pipe';
     CreateSessionComponent,
     SessionmenuComponent,
     SafePipe,
+    UseralertComponent,
   ],
   imports: [
     BrowserModule,

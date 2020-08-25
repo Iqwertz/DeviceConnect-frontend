@@ -1,4 +1,5 @@
 <div class="active-session-container" *ngIf="!sessionError">
+  <app-useralert></app-useralert>
   <a class="site-name" href="/">TrasferTube.io</a>
   <app-sessionmenu></app-sessionmenu>
   <app-session-messages [reconnectError]="reconnectionError">

@@ -1,0 +1,10 @@
+<div
+  [ngClass]="{
+    open: alertOpen,
+    success: alertType == 'success',
+    error: alertType == 'error'
+  }"
+  class="alert-container"
+>
+  {{ alertText }}
+</div>

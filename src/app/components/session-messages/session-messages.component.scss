@@ -38,6 +38,7 @@
       flex-flow: row;
 
       &.left {
+        cursor: pointer;
         text-align: left;
         float: left;
 
@@ -49,6 +50,7 @@
       }
 
       &.right {
+        cursor: pointer;
         text-align: right;
         float: right;
         .document,

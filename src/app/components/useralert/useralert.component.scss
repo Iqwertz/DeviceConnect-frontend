@@ -1,0 +1,25 @@
+@import "./src/scss/variables";
+
+.alert-container {
+  position: absolute;
+  top: -2em;
+  width: 100%;
+  text-align: center;
+  padding: 13px 0;
+  font-family: $font;
+  font-size: 1.2em;
+  z-index: 5;
+  transition: top 1s;
+
+  &.open {
+    top: 0;
+  }
+
+  &.success {
+    background: $alert-user-success;
+  }
+
+  &.error {
+    background: $alert-user-error;
+  }
+}
