@@ -1,0 +1,10 @@
+<div class="open-search" (click)="searchField = true">
+  <fa-icon [icon]="faSearch"></fa-icon>
+</div>
+
+<div class="search-field-container" *ngIf="searchField">
+  <input type="text" placeholder="Search Session" />
+  <div class="close" (click)="searchField = false">
+    &times;
+  </div>
+</div>
