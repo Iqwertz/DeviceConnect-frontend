@@ -127,6 +127,32 @@
       .submit {
         min-width: 3em;
       }
+
+      .preview-container {
+        right: 17%;
+        height: 200px;
+        width: 83%;
+
+        &.image {
+          img {
+            max-width: 80%;
+            max-height: 180px;
+          }
+        }
+
+        &.document {
+          fa-icon {
+            font-size: 4em;
+          }
+          .document-name {
+            font-size: 1em;
+          }
+        }
+
+        .close {
+          right: 5px;
+        }
+      }
     }
   }
 }

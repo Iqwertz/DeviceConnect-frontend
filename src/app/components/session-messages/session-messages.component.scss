@@ -55,7 +55,7 @@
 
       &.right {
         cursor: pointer;
-        text-align: right;
+        text-align: left;
         float: right;
         .document,
         .message,
@@ -190,5 +190,14 @@
 @media screen and (max-width: $media-breakpoint-small) {
   .messages-container {
     width: 95%;
+    .messages li {
+      .message-container {
+        max-width: 90vw;
+      }
+    }
+  }
+
+  .back-to-start {
+    max-width: 80vw;
   }
 }
