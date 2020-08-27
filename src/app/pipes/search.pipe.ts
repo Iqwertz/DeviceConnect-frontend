@@ -1,3 +1,11 @@
+////////////////////////////////////////////
+/*
+Pipe: SearchPipe
+use: value | search: searchTerm : messageType
+description: checks if a message contains a searchterm and  if it highlites it with the mark tag, it also excludes status messages
+*/
+//////////////////////////////////////////
+
 import { Pipe, PipeTransform } from '@angular/core';
 import { messageType } from '../services/messages.service';
 

@@ -1,3 +1,5 @@
+/////////////////////this pipe is currently not used... It could be used to bypass the angular sanitizer
+
 import { Pipe, PipeTransform } from '@angular/core';
 import {
   DomSanitizer,
