@@ -16,6 +16,7 @@ import {
 } from '../../services/messages.service';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngxs/store';
+import { UserAlertService } from '../../services/user-alert.service';
 import {
   SetUserId,
   SetSessionId,
@@ -50,7 +51,8 @@ export class SessionComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private connectService: ConnectService,
     private messagesService: MessagesService,
-    private store: Store
+    private store: Store,
+    private uAlert: UserAlertService
   ) {}
   socket: SocketIOClient.Socket;
   @ViewChild(SessionMessagesComponent)
@@ -105,6 +107,7 @@ export class SessionComponent implements OnInit {
       this.store.dispatch(new SetUserId(ini.userId));
       this.store.dispatch(new SetSessionId(ini.sessionId));
       this.store.dispatch(new SetUserName(ini.userName));
+      this.uAlert.setUserAlert('Connected', 'success');
     });
 
     this.socket.on('newUser', (userData) => {
@@ -116,12 +119,14 @@ export class SessionComponent implements OnInit {
 
     this.socket.on('disconnect', () => {
       this.sendStatus('Disconnected! Trying to reconnect...');
+      this.uAlert.setUserAlert('Disconnected! Trying to reconnect...', 'error');
       console.log('disconnected');
     });
 
     this.socket.on('reconnect_failed', () => {
       this.reconnectionError = true;
       this.sendStatus(`Couldn't reconnect :(`);
+      this.uAlert.setUserAlert(`Couldn't reconnect : (`, 'error');
       console.log('reconnect failed');
     });
   }

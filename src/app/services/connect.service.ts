@@ -44,9 +44,6 @@ export class ConnectService implements OnInit {
       reconnectionDelayMax: environment.reconnectSettings.reconnectionDelayMax,
       reconnectionAttempts: environment.reconnectSettings.reconnectionAttempts,
     });
-    /*this.socket.on(enviroment.messageIdentifier, function (msg) {
-      console.log(msg);
-    });*/
     return this.socket;
   }
 }
