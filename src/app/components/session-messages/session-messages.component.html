@@ -37,9 +37,10 @@
               >
                 <fa-icon [icon]="faDownload"></fa-icon>
               </div>
-              <div class="file-name">
-                {{ item.message | search: searchTerm:item.type }}
-              </div>
+              <div
+                class="file-name"
+                [innerHTML]="item.message | search: searchTerm:item.type"
+              ></div>
             </span>
           </div>
           <div class="user-icon" *ngIf="item.type == 'sender'">
