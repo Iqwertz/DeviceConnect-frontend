@@ -9,6 +9,10 @@
   color: $light-text-color;
   font-size: 2em;
   font-family: $font;
+
+  &.mobile {
+    display: none;
+  }
 }
 
 .session-error-container {
@@ -32,5 +36,16 @@
   button {
     @include button-background(320deg);
     @include button-style();
+  }
+}
+
+@media screen and (max-width: $media-breakpoint-small) {
+  .site-name {
+    &.default {
+      display: none;
+    }
+    &.mobile {
+      display: block;
+    }
   }
 }

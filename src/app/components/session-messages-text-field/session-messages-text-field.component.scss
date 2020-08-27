@@ -37,7 +37,6 @@
       box-shadow: $button-shadow;
       @include button-background(210deg);
     }
-    //.image
     .upload-container {
       text-align: center;
       padding: 10px 0;
@@ -117,11 +116,16 @@
       width: 95%;
 
       input {
-        width: 80%;
+        width: 70%;
       }
 
-      button {
-        min-width: 2.5em;
+      .upload-container {
+        width: 18%;
+        margin: 0 2px;
+      }
+
+      .submit {
+        min-width: 3em;
       }
     }
   }

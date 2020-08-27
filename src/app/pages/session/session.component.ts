@@ -23,6 +23,7 @@ import {
   SetUserName,
   SetUserInSession,
 } from '../../store/app.action';
+import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 
 export interface SessionInitData {
   userId: string;
@@ -60,6 +61,7 @@ export class SessionComponent implements OnInit {
   currentSessionId: string;
   sessionError: boolean = false;
   reconnectionError: boolean = false;
+  faExchange = faExchangeAlt;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {

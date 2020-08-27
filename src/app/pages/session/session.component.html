@@ -1,6 +1,9 @@
 <div class="active-session-container" *ngIf="!sessionError">
   <app-useralert></app-useralert>
-  <a class="site-name" href="/">TrasferTube.io</a>
+  <a class="site-name default" href="/">TrasferTube.io</a>
+  <a class="site-name mobile" href="/"
+    ><fa-icon [icon]="faExchange"></fa-icon>.io</a
+  >
   <app-sessionmenu></app-sessionmenu>
   <app-search-messages></app-search-messages>
   <app-session-messages [reconnectError]="reconnectionError">
