@@ -22,6 +22,7 @@ import {
   SetUserInSession,
 } from './app.action';
 import { UserData } from '../pages/session/session.component';
+import { SetSearchTerm } from './app.action';
 
 export type SearchType = 'gifs' | 'stickers';
 
@@ -30,6 +31,7 @@ export interface AppStateModel {
   sessionId: string;
   userName: string;
   userInSession: Map<string, UserData>;
+  searchTerm: string;
 }
 
 @State<AppStateModel>({
@@ -39,6 +41,7 @@ export interface AppStateModel {
     sessionId: '0000',
     userName: null,
     userInSession: new Map<string, UserData>(),
+    searchTerm: 'this',
   },
 })
 export class AppState {
@@ -90,6 +93,18 @@ export class AppState {
   ) {
     context.patchState({
       userInSession: action.userInSession,
+    });
+  }
+
+  @Selector()
+  static searchTerm(state: AppStateModel) {
+    return state.searchTerm;
+  }
+
+  @Action(SetSearchTerm)
+  setSearchTerm(context: StateContext<AppStateModel>, action: SetSearchTerm) {
+    context.patchState({
+      searchTerm: action.searchTerm,
     });
   }
 }

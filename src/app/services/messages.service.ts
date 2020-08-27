@@ -1,4 +1,4 @@
-import { Injectable, OnInit, Sanitizer } from '@angular/core';
+import { Injectable, OnInit, Sanitizer, ElementRef } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../store/app.state';
 import { Select } from '@ngxs/store';
@@ -34,10 +34,15 @@ export class MessagesService {
   userId: string = null;
 
   private onUpdate$$ = new BehaviorSubject<MessageObject[]>([]);
-  private messages: MessageObject[] = [];
+  private onScrollToId$$ = new BehaviorSubject<number>(0);
+  messages: MessageObject[] = [];
 
   get onUpdate$(): Observable<MessageObject[]> {
     return this.onUpdate$$.asObservable();
+  }
+
+  get onScrollToId$(): Observable<number> {
+    return this.onScrollToId$$.asObservable();
   }
 
   addMessage(msg: MessageObject) {
@@ -64,6 +69,10 @@ export class MessagesService {
     this.onUpdate$$.complete();
   }
 
+  scrollToId(id: number) {
+    this.onScrollToId$$.next(id);
+  }
+
   private formatLink(msg: MessageObject): MessageObject {
     const text: string = msg.message;
     if (this.isUrl(text)) {
@@ -75,10 +84,10 @@ export class MessagesService {
   private isUrl(url: string): boolean {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // https protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
         '(\\#[-a-z\\d_]*)?$',
       'i'
     ); // fragment locator

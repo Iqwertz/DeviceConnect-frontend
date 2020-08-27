@@ -19,3 +19,8 @@ export class SetUserInSession {
   static type = 'SetUserInSession';
   constructor(public userInSession: Map<string, UserData>) {}
 }
+
+export class SetSearchTerm {
+  static type = 'SetSearchTerm';
+  constructor(public searchTerm: string) {}
+}

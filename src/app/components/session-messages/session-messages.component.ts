@@ -15,6 +15,8 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { messageType } from '../../services/messages.service';
 import { UseralertComponent } from '../useralert/useralert.component';
 import { UserAlertService } from '../../services/user-alert.service';
+import { AppState } from '../../store/app.state';
+import { Select } from '@ngxs/store';
 
 @Component({
   selector: 'app-session-messages',
@@ -24,8 +26,7 @@ import { UserAlertService } from '../../services/user-alert.service';
 export class SessionMessagesComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
-    private uAlert: UserAlertService,
-    private http: HttpClient
+    private uAlert: UserAlertService
   ) {}
   messageList: MessageObject[] = [];
   faDownload = faArrowDown;
@@ -34,12 +35,24 @@ export class SessionMessagesComponent implements OnInit {
   @Input()
   reconnectError: boolean = false;
 
+  searchTerm: string = '';
+  @Select(AppState.searchTerm)
+  searchTerm$;
+
   ngOnInit(): void {
     this.messagesService.onUpdate$.subscribe((messagesList) => {
       this.messageList = messagesList;
       setTimeout(() => {
         this.scrollToBottom();
       }, 10);
+    });
+
+    this.messagesService.onScrollToId$.subscribe((id) => {
+      this.scrollToElement(id.toString());
+    });
+
+    this.searchTerm$.subscribe((searchTerm: string) => {
+      this.searchTerm = searchTerm;
     });
   }
 
@@ -64,6 +77,14 @@ export class SessionMessagesComponent implements OnInit {
     if (type != 'status') {
       this.copyStringToClipboard(text);
     }
+    this.scrollToElement('2');
+  }
+
+  scrollToElement(id: string) {
+    try {
+      let el = document.getElementById(id);
+      el.scrollIntoView({ block: 'center' });
+    } catch (err) {}
   }
 
   private copyStringToClipboard(str: string) {

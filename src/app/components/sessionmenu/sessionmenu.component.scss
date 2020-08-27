@@ -135,7 +135,7 @@
   font-size: 30px;
   cursor: pointer;
   position: absolute;
-  color: #fff;
+  color: $light-text-color;
 }
 
 @media screen and (max-width: $media-breakpoint-medium) {

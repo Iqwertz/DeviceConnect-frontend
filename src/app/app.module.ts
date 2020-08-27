@@ -20,6 +20,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SessionmenuComponent } from './components/sessionmenu/sessionmenu.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { UseralertComponent } from './components/useralert/useralert.component';
+import { SearchMessagesComponent } from './components/search-messages/search-messages.component';
+import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { UseralertComponent } from './components/useralert/useralert.component';
     SessionmenuComponent,
     SafePipe,
     UseralertComponent,
+    SearchMessagesComponent,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,
@@ -49,5 +53,6 @@ import { UseralertComponent } from './components/useralert/useralert.component';
   ],
   providers: [ConnectService],
   bootstrap: [AppComponent],
+  exports: [SearchPipe],
 })
 export class AppModule {}
