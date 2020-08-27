@@ -78,7 +78,7 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   ///Image Upload:
   fileChangeEvent(fileInput: any, fileType: FileType) {
     this.fileHandlerService
-      .fileImageHandler(fileInput, fileType)
+      .fileHandler(fileInput, fileType)
       .subscribe((result) => {
         this.fileData = result;
         if (this.fileData.error.length > 0) {
