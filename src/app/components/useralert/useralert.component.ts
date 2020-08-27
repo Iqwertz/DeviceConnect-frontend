@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+/*
+user alert Component
+Displays user alerts at the top of the site. THe message can be succes (green) or error (red)
+*/
+/////////////////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import {
@@ -11,7 +17,7 @@ import {
   styleUrls: ['./useralert.component.scss'],
 })
 export class UseralertComponent implements OnInit {
-  alertText: string = '';
+  alertText: string = ''; //text of the alert
   alertOpen: boolean = false;
   alertType: UserAlertTypes = 'error';
   private timeout;
@@ -20,6 +26,7 @@ export class UseralertComponent implements OnInit {
   constructor(private userAlertService: UserAlertService) {}
   ngOnInit(): void {
     this.userAlertService.onUpdate$.subscribe((alert) => {
+      //subsrcibe to user alert service and set new user alert on change
       clearTimeout(this.timeout);
       this.closeAlert();
       this.alertText = alert.alert;
@@ -32,6 +39,7 @@ export class UseralertComponent implements OnInit {
   }
 
   private closeAlert() {
+    //closes alert
     this.alertText = '';
     this.alertOpen = false;
   }

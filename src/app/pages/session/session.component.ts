@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+/*
+Session Component
+Manages Session setup
+*/
+/////////////////////////////////////////////
 import { ContentType } from './../../services/messages.service';
 import { ConnectService } from './../../services/connect.service';
 import { Component, OnInit, ViewChild, ɵɵviewQuery } from '@angular/core';
@@ -26,18 +32,21 @@ import {
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 
 export interface SessionInitData {
+  //Interface containing the session ini object
   userId: string;
   userName: string;
   sessionId: string;
 }
 
 export interface SendMessageObject {
+  //Interface containing the message data when sending one
   message: string;
   base64Data: string;
   contentType: ContentType;
 }
 
 export interface UserData {
+  //Interface containing User Data
   userName: string;
   userId: string;
 }
@@ -59,17 +68,19 @@ export class SessionComponent implements OnInit {
   @ViewChild(SessionMessagesComponent)
   messagesComponent: SessionMessagesComponent;
   currentSessionId: string;
-  sessionError: boolean = false;
-  reconnectionError: boolean = false;
+  sessionError: boolean = false; //bool holding the session connection status
+  reconnectionError: boolean = false; //is fals after max reconnection attempts are reached
   faExchange = faExchangeAlt;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
+      //get Id route parameter
       this.currentSessionId = params.get('id');
-      this.joinSession(this.currentSessionId);
+      this.joinSession(this.currentSessionId); //join session with url parameter
     });
 
     this.router.events.subscribe((event: Event) => {
+      //router events
       if (event instanceof NavigationStart) {
         //do something on start activity
       }
@@ -87,6 +98,7 @@ export class SessionComponent implements OnInit {
 
   joinSession(id: string) {
     this.connectService.checkSession(id).subscribe(
+      //connect with connect service initialise socket when succesfull
       () => {
         this.socketIni(this.connectService.joinSession(id));
         this.sessionError = false;
@@ -99,6 +111,7 @@ export class SessionComponent implements OnInit {
   }
 
   socketIni(s: SocketIOClient.Socket) {
+    //initialize socket and listen to events
     this.socket = s;
 
     this.socket.on(environment.messageIdentifier, (msg: MessageObject) => {
@@ -134,7 +147,9 @@ export class SessionComponent implements OnInit {
   }
 
   sendStatus(status: string) {
+    //sends a status message
     const msg: MessageObject = {
+      //create message object
       message: status,
       messageId: -1,
       userId: 'SERVER',
@@ -142,10 +157,11 @@ export class SessionComponent implements OnInit {
       contentType: 'Text',
       base64Data: '',
     };
-    this.messagesService.addMessage(msg);
+    this.messagesService.addMessage(msg); //add Message object
   }
 
   sendMessage(msg: SendMessageObject) {
+    //send message by emiting it to the socket
     this.socket.emit(environment.messageIdentifier, msg);
   }
 }

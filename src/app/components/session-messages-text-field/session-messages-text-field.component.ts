@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+/*
+Session Message Text Component
+Displays the input bar at the bottom of the site
+*/
+/////////////////////////////////////////////
 import {
   fileResult,
   FileHandlerService,
@@ -28,6 +34,7 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   faFileAlt = faFileAlt;
 
   fileData: fileResult = {
+    //file data default
     dataBase64: '',
     error: '',
     isSaved: false,
@@ -44,24 +51,29 @@ export class SessionMessagesTextFieldComponent implements OnInit {
 
   sendMessage(msg: string) {
     if (this.fileData.dataBase64.length > 1) {
+      //check if file data exists
       this.textMessage = '';
       const message: SendMessageObject = {
+        //create message with file data
         message: this.fileData.name,
         base64Data: this.fileData.dataBase64,
         contentType: this.fileData.type,
       };
-      this.newMessageChange.emit(message);
+      this.newMessageChange.emit(message); //emit new Message
       this.deleteFile();
     } else {
       if (msg.length > 0) {
+        //check if message has content
         if (msg.length <= environment.maxMessageLength) {
+          //check if message isnt to large
           this.textMessage = '';
           const message: SendMessageObject = {
+            //create message
             message: msg,
             base64Data: '',
             contentType: 'Text',
           };
-          this.newMessageChange.emit(message);
+          this.newMessageChange.emit(message); //emit message
         } else {
           this.userAlert.setUserAlert(
             'The Message is longer than the permitted amount of ' +
@@ -74,9 +86,8 @@ export class SessionMessagesTextFieldComponent implements OnInit {
     }
   }
 
-  //Image Upload
-  ///Image Upload:
   fileChangeEvent(fileInput: any, fileType: FileType) {
+    //called when file is uploaded converts file to fileobject with the filehandler service
     this.fileHandlerService
       .fileHandler(fileInput, fileType)
       .subscribe((result) => {
@@ -88,6 +99,7 @@ export class SessionMessagesTextFieldComponent implements OnInit {
   }
 
   deleteFile() {
+    //deletes file
     this.fileData.error = '';
     this.fileData.dataBase64 = '';
     this.fileData.isSaved = false;
