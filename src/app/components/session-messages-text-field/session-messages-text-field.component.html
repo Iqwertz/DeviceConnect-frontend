@@ -5,7 +5,11 @@
       <fa-icon [icon]="faFile"> </fa-icon>
     </label>
     <label class="image upload-container">
-      <input type="file" (change)="fileChangeEvent($event, 'Picture')" />
+      <input
+        type="file"
+        accept="image/*"
+        (change)="fileChangeEvent($event, 'Picture')"
+      />
       <fa-icon [icon]="faCamera"> </fa-icon>
     </label>
     <input [(ngModel)]="textMessage" name="msgField" autocomplete="off" />
