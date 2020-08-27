@@ -12,6 +12,7 @@ import {
   faFileAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
+import { UserAlertService } from 'src/app/services/user-alert.service';
 
 @Component({
   selector: 'app-session-messages-text-field',
@@ -34,7 +35,10 @@ export class SessionMessagesTextFieldComponent implements OnInit {
     type: 'Document',
   };
 
-  constructor(private fileHandlerService: FileHandlerService) {}
+  constructor(
+    private fileHandlerService: FileHandlerService,
+    private userAlert: UserAlertService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -59,10 +63,11 @@ export class SessionMessagesTextFieldComponent implements OnInit {
           };
           this.newMessageChange.emit(message);
         } else {
-          alert(
+          this.userAlert.setUserAlert(
             'The Message is longer than the permitted amount of ' +
               environment.maxMessageLength +
-              ' chars'
+              ' chars',
+            'error'
           );
         }
       }
@@ -77,7 +82,7 @@ export class SessionMessagesTextFieldComponent implements OnInit {
       .subscribe((result) => {
         this.fileData = result;
         if (this.fileData.error.length > 0) {
-          alert(this.fileData.error);
+          this.userAlert.setUserAlert(this.fileData.error, 'error');
         }
       });
   }

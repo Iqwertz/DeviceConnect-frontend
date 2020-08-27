@@ -15,6 +15,8 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { messageType } from '../../services/messages.service';
 import { UseralertComponent } from '../useralert/useralert.component';
 import { UserAlertService } from '../../services/user-alert.service';
+import { AppState } from '../../store/app.state';
+import { Select } from '@ngxs/store';
 
 @Component({
   selector: 'app-session-messages',
@@ -33,6 +35,10 @@ export class SessionMessagesComponent implements OnInit {
   @Input()
   reconnectError: boolean = false;
 
+  searchTerm: string = '';
+  @Select(AppState.searchTerm)
+  searchTerm$;
+
   ngOnInit(): void {
     this.messagesService.onUpdate$.subscribe((messagesList) => {
       this.messageList = messagesList;
@@ -43,6 +49,10 @@ export class SessionMessagesComponent implements OnInit {
 
     this.messagesService.onScrollToId$.subscribe((id) => {
       this.scrollToElement(id.toString());
+    });
+
+    this.searchTerm$.subscribe((searchTerm: string) => {
+      this.searchTerm = searchTerm;
     });
   }
 

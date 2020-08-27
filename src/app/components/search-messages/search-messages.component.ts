@@ -12,6 +12,8 @@ import {
   faAngleLeft,
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngxs/store';
+import { SetSearchTerm } from '../../store/app.action';
 
 @Component({
   selector: 'app-search-messages',
@@ -21,7 +23,8 @@ import {
 export class SearchMessagesComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
-    private userAlertService: UserAlertService
+    private userAlertService: UserAlertService,
+    private store: Store
   ) {}
 
   searchField: boolean = false;
@@ -34,6 +37,7 @@ export class SearchMessagesComponent implements OnInit {
   ngOnInit(): void {}
 
   search(reset: boolean) {
+    this.store.dispatch(new SetSearchTerm(this.searchTerm));
     if (reset) {
       this.searchIndex = 0;
     }
@@ -58,6 +62,7 @@ export class SearchMessagesComponent implements OnInit {
   close() {
     this.searchField = false;
     this.searchTerm = '';
+    this.store.dispatch(new SetSearchTerm(this.searchTerm));
   }
 
   private searchMessages(q: string): number {

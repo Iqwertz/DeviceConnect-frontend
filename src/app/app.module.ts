@@ -21,6 +21,7 @@ import { SessionmenuComponent } from './components/sessionmenu/sessionmenu.compo
 import { SafePipe } from './pipes/safe.pipe';
 import { UseralertComponent } from './components/useralert/useralert.component';
 import { SearchMessagesComponent } from './components/search-messages/search-messages.component';
+import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SearchMessagesComponent } from './components/search-messages/search-mes
     SafePipe,
     UseralertComponent,
     SearchMessagesComponent,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,
@@ -51,5 +53,6 @@ import { SearchMessagesComponent } from './components/search-messages/search-mes
   ],
   providers: [ConnectService],
   bootstrap: [AppComponent],
+  exports: [SearchPipe],
 })
 export class AppModule {}
