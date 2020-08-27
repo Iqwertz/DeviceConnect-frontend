@@ -15,13 +15,29 @@
   color: $light-text-color;
 
   .website-title {
+    text-align: center;
     max-width: 80%;
     margin: 40px;
     font-size: 6em;
-    word-wrap: break-word;
+
+    br {
+      display: none;
+    }
   }
 
   .or-container {
     font-size: 2em;
+  }
+}
+
+@media screen and (max-width: $media-breakpoint-small) {
+  .landing-container {
+    .website-title {
+      font-size: 4em;
+      margin: 20px;
+      br {
+        display: block;
+      }
+    }
   }
 }
