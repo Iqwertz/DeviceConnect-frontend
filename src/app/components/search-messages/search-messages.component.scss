@@ -31,6 +31,46 @@
     padding: 5px 10px;
   }
 
+  .arrows {
+    width: 3.4em;
+    background: #fff;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-items: center;
+    box-shadow: $button-shadow;
+    border-radius: 10px;
+    font-size: 25px;
+    padding: 5px 0px;
+
+    .left,
+    .right {
+      display: flex;
+      flex-flow: row;
+      align-content: center;
+      justify-content: center;
+      width: 50%;
+      color: rgb(41, 41, 41);
+      cursor: pointer;
+    }
+
+    .right:hover {
+      color: rgb(0, 228, 159);
+    }
+
+    .left:hover {
+      color: rgb(0, 228, 159);
+    }
+
+    .left {
+      border-right: 1px solid rgb(153, 153, 153);
+    }
+
+    .right {
+      border-left: 1px solid rgb(153, 153, 153);
+    }
+  }
+
   .close {
     color: rgb(255, 56, 56);
     font-size: 30px;

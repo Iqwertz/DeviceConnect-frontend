@@ -1,10 +1,22 @@
-<div class="open-search" (click)="searchField = true">
+<div class="open-search" (click)="searchField = !searchField">
   <fa-icon [icon]="faSearch"></fa-icon>
 </div>
 
 <div class="search-field-container" *ngIf="searchField">
-  <input type="text" placeholder="Search Session" />
-  <div class="close" (click)="searchField = false">
-    &times;
+  <input
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="search(true)"
+    type="text"
+    placeholder="Search
+  Session"
+  />
+  <div class="close" (click)="close()">&times;</div>
+  <div class="arrows">
+    <div (click)="nextSearch()" class="left">
+      <fa-icon [icon]="faAngleLeft"></fa-icon>
+    </div>
+    <div (click)="lastSearch()" class="right">
+      <fa-icon [icon]="faAngleRight"></fa-icon>
+    </div>
   </div>
 </div>

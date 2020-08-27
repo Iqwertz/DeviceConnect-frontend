@@ -24,8 +24,7 @@ import { UserAlertService } from '../../services/user-alert.service';
 export class SessionMessagesComponent implements OnInit {
   constructor(
     private messagesService: MessagesService,
-    private uAlert: UserAlertService,
-    private http: HttpClient
+    private uAlert: UserAlertService
   ) {}
   messageList: MessageObject[] = [];
   faDownload = faArrowDown;
@@ -40,6 +39,10 @@ export class SessionMessagesComponent implements OnInit {
       setTimeout(() => {
         this.scrollToBottom();
       }, 10);
+    });
+
+    this.messagesService.onScrollToId$.subscribe((id) => {
+      this.scrollToElement(id.toString());
     });
   }
 
@@ -64,6 +67,14 @@ export class SessionMessagesComponent implements OnInit {
     if (type != 'status') {
       this.copyStringToClipboard(text);
     }
+    this.scrollToElement('2');
+  }
+
+  scrollToElement(id: string) {
+    try {
+      let el = document.getElementById(id);
+      el.scrollIntoView({ block: 'center' });
+    } catch (err) {}
   }
 
   private copyStringToClipboard(str: string) {

@@ -9,6 +9,7 @@
             right: item.type == 'sender',
             center: item.type == 'status'
           }"
+          id="{{ item.messageId + '' }}"
         >
           <div class="user-icon" *ngIf="item.type == 'receiver'">
             <img src="/assets/usericons/{{ item.userName }}.svg" />
