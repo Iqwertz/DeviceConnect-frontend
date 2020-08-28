@@ -47,6 +47,10 @@ ng serve
 - [ ] disconnect when sending large files over server setup (not localhost)
 - [ ] header cors error when using server setup (not localhost)
 
+## Backend
+
+Here is the repo for the backend of the project: [backend](https://github.com/Iqwertz/DeviceConnect-backend)
+
 ## Author
 
 👤 **Julius Hussl**
