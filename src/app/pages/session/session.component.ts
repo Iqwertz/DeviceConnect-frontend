@@ -113,6 +113,7 @@ export class SessionComponent implements OnInit {
   socketIni(s: SocketIOClient.Socket) {
     //initialize socket and listen to events
     this.socket = s;
+    this.messagesService.removeAllMessages();
 
     this.socket.on(environment.messageIdentifier, (msg: MessageObject) => {
       this.messagesService.addMessage(msg);

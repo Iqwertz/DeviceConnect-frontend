@@ -16,7 +16,8 @@ export class SearchPipe implements PipeTransform {
   transform(value: string, q: string, t: messageType): string {
     if (value.includes(q) && t != 'status') {
       const mark = `<mark>${q}</mark>`;
-      value = value.replace(q, mark);
+      let regExp = new RegExp(q, 'g');
+      value = value.replace(regExp, mark);
       return value;
     } else {
       return value;

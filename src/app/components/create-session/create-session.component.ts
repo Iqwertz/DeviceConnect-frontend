@@ -1,3 +1,10 @@
+/////////////////////////////////////////////
+/*
+creates session Component
+Displays create session button
+*/
+/////////////////////////////////////////////
+
 import { Component, OnInit } from '@angular/core';
 import { ConnectService } from '../../services/connect.service';
 import { Router } from '@angular/router';
@@ -18,6 +25,7 @@ export class CreateSessionComponent implements OnInit {
   ngOnInit(): void {}
 
   createSession() {
+    //trys toi create a new session with the connect service and connects it on success
     this.connectService.newSession().subscribe(
       (res) => {
         this.router.navigate(['session', res.sessionId]);

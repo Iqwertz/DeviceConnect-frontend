@@ -110,7 +110,7 @@ export class MessagesService {
 
   private isUrl(url: string): boolean {
     //Checks if message is a url
-    var pattern = new RegExp(
+    let pattern = new RegExp(
       '^(https?:\\/\\/)?' + // https protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
         '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address

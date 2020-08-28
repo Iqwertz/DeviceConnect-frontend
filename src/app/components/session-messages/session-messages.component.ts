@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+/*
+Session Message Text Component
+Displays the messages
+*/
+/////////////////////////////////////////////
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
@@ -28,7 +34,7 @@ export class SessionMessagesComponent implements OnInit {
     private messagesService: MessagesService,
     private uAlert: UserAlertService
   ) {}
-  messageList: MessageObject[] = [];
+  messageList: MessageObject[] = []; //messages on the client side
   faDownload = faArrowDown;
   @ViewChild('scroll') private myScrollContainer: ElementRef;
 
@@ -41,6 +47,7 @@ export class SessionMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messagesService.onUpdate$.subscribe((messagesList) => {
+      //subscribe to message list and scroll to bottom after short delay (needed tolet some time to load data)
       this.messageList = messagesList;
       setTimeout(() => {
         this.scrollToBottom();
@@ -48,21 +55,25 @@ export class SessionMessagesComponent implements OnInit {
     });
 
     this.messagesService.onScrollToId$.subscribe((id) => {
+      //Subscribe to scroll to id and scroll to element when called
       this.scrollToElement(id.toString());
     });
 
     this.searchTerm$.subscribe((searchTerm: string) => {
+      //subscribe to search term from store
       this.searchTerm = searchTerm;
     });
   }
 
   scrollToBottom(): void {
+    //trys to sroll to the bottom of the message container
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) {}
   }
 
   downloadFileFromId(fileId: number) {
+    //gets message base 64 data converts it to a blob and downloads it
     console.log(fileId);
     let messageData: MessageObject = this.getMessagebyId(fileId);
     fetch(messageData.base64Data)
@@ -74,13 +85,14 @@ export class SessionMessagesComponent implements OnInit {
   }
 
   textMessageClicked(type: messageType, text: string) {
+    //checks if message isnt a status message and copys it to clipboard
     if (type != 'status') {
       this.copyStringToClipboard(text);
     }
-    this.scrollToElement('2');
   }
 
   scrollToElement(id: string) {
+    //get element ref and scroll it into view
     try {
       let el = document.getElementById(id);
       el.scrollIntoView({ block: 'center' });
@@ -88,6 +100,7 @@ export class SessionMessagesComponent implements OnInit {
   }
 
   private copyStringToClipboard(str: string) {
+    //copys string to clipboard by creating a textarea and copying it with document.executeCommand
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -103,6 +116,7 @@ export class SessionMessagesComponent implements OnInit {
   }
 
   private download(file: string, blobdata) {
+    //downloads a file by creating an blob url and clicking it
     var element = document.createElement('a');
     element.setAttribute('href', blobdata);
     element.setAttribute('download', file);
@@ -112,6 +126,7 @@ export class SessionMessagesComponent implements OnInit {
   }
 
   private getMessagebyId(id: number) {
+    //loops message array and checks if message messages id, returns the message when found
     for (let i = 0; i < this.messageList.length; i++) {
       if (this.messageList[i].messageId == id) {
         return this.messageList[i];

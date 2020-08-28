@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+/*
+search Message Text Component
+Displays the search field
+*/
+/////////////////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import {
   UserAlertService,
@@ -27,9 +33,9 @@ export class SearchMessagesComponent implements OnInit {
     private store: Store
   ) {}
 
-  searchField: boolean = false;
-  searchTerm: string = '';
-  private searchIndex: number = 0;
+  searchField: boolean = false; //search field active status
+  searchTerm: string = ''; //the current search term
+  private searchIndex: number = 0; //the Index of the current searched message / used to go up and down in searched messages
 
   faSearch = faSearch;
   faAngleLeft = faAngleLeft;
@@ -37,35 +43,43 @@ export class SearchMessagesComponent implements OnInit {
   ngOnInit(): void {}
 
   search(reset: boolean) {
-    this.store.dispatch(new SetSearchTerm(this.searchTerm));
+    //triggers a new search// if true the search Index gets reset
+    this.store.dispatch(new SetSearchTerm(this.searchTerm)); //save searchterm in store
     if (reset) {
+      //reset index if true
       this.searchIndex = 0;
     }
-    const id: number = this.searchMessages(this.searchTerm);
+    const id: number = this.searchMessages(this.searchTerm); //searches messages and get id of matched message
     if (id >= 0) {
+      //when id found scroll to it
       this.messagesService.scrollToId(id);
     } else if (id == -2) {
+      // if no message is found, because no message is above or below -> alert user
       this.userAlertService.setUserAlert('no messages found', 'error');
     }
   }
 
   nextSearch() {
+    //increases search index and trigger new search
     this.searchIndex++;
     this.search(false);
   }
 
   lastSearch() {
+    //decrease search index and trigger new search
     this.searchIndex--;
     this.search(false);
   }
 
   close() {
+    //closes search and clear search Term
     this.searchField = false;
     this.searchTerm = '';
     this.store.dispatch(new SetSearchTerm(this.searchTerm));
   }
 
   private searchMessages(q: string): number {
+    //search messages for string / it returns the nth element of the searchIndex //returns -2 when no element found because search index is to high // returns -3 when no element is was found (it doesnt return -1 one because private server message have an id of -1)
     const messages: MessageObject[] = this.messagesService.messages;
     let resultCount: number = 0;
     for (let i = messages.length - 1; i >= 0; i--) {
@@ -81,9 +95,10 @@ export class SearchMessagesComponent implements OnInit {
       }
     }
     if (resultCount > 0) {
+      //check if something was found
       return -2;
     } else {
-      return -1;
+      return -3;
     }
   }
 }

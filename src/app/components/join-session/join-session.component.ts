@@ -1,3 +1,10 @@
+/////////////////////////////////////////////
+/*
+join session Component
+Displays the join session field on the landing page
+*/
+/////////////////////////////////////////////
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,6 +19,7 @@ export class JoinSessionComponent implements OnInit {
   ngOnInit(): void {}
 
   joinSession(id: string) {
+    //join session by routing to it
     if (id.length == 4) {
       id = id.toUpperCase();
       this.router.navigate(['session', id]);
@@ -19,6 +27,7 @@ export class JoinSessionComponent implements OnInit {
   }
 
   inputKey(event) {
+    //handles input events on the 4 inout fields //
     if (event.key === 'Backspace') {
       let element = event.srcElement.previousElementSibling; //get the sibling element
 
