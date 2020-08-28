@@ -5,8 +5,6 @@
 
 > Transfertube is a webapp to easily exchange data between device. It is build with angular and uses websockets for server client communication.
 
-### 🏠 [Homepage](https://iqwertz.github.io/Transfertube/)
-
 ### ✨ [Demo](https://iqwertz.github.io/Transfertube/)
 
 ## Install
