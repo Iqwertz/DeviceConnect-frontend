@@ -51,7 +51,8 @@ export type ChunkType = 'start' | 'middle' | 'end';
 export interface Chunk {
   chunkType: ChunkType;
   chunkData: string;
-  chunkID: number;
+  chunkID: string;
+  senderId: string;
 }
 
 @Injectable({
@@ -101,14 +102,16 @@ export class MessagesService {
 
   sendMessage(socket: SocketIOClient.Socket, msg: SendMessageObject) {
     //sends messages and handles the file transmission
+    this.chunkMessageId++;
     if (msg.base64Data.length > 1) {
       let chunkedData = this.chunkString(
         msg.base64Data,
         environment.chunkSize,
-        this.chunkMessageId++
+        this.userId + this.chunkMessageId,
+        this.userId
       );
       this.chunkQueue = this.chunkQueue.concat(chunkedData);
-      msg.base64Data = this.chunkMessageId.toString();
+      msg.base64Data = this.userId + this.chunkMessageId;
       socket.emit(environment.messageIdentifier, msg);
     } else {
       socket.emit(environment.messageIdentifier, msg);
@@ -117,9 +120,10 @@ export class MessagesService {
 
   chunkResponse(res, socket: SocketIOClient.Socket) {
     if ((res.res = 'next')) {
-      console.log(this.chunkQueue);
-      socket.emit('chunkData', this.chunkQueue[0]);
-      this.chunkQueue.shift();
+      if (this.chunkQueue.length >= 1) {
+        socket.emit('chunkData', this.chunkQueue[0]);
+        this.chunkQueue.shift();
+      }
     }
   }
 
@@ -132,7 +136,12 @@ export class MessagesService {
     this.onScrollToId$$.next(id);
   }
 
-  private chunkString(str: string, len: number, messageId: number): Chunk[] {
+  private chunkString(
+    str: string,
+    len: number,
+    messageId: string,
+    senderId: string
+  ): Chunk[] {
     //splits string into chunks
     const size = Math.ceil(str.length / len);
     const r: Chunk[] = Array(size);
@@ -143,8 +152,18 @@ export class MessagesService {
         chunkData: str.substr(offset, len),
         chunkType: 'middle',
         chunkID: messageId,
+        senderId: senderId,
       };
       offset += len;
+    }
+
+    if (r.length == 1) {
+      r.push({
+        chunkData: '',
+        chunkID: messageId,
+        chunkType: 'end',
+        senderId: senderId,
+      });
     }
 
     r[0].chunkType = 'start';
