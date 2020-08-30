@@ -119,6 +119,10 @@ export class SessionComponent implements OnInit {
       this.messagesService.addMessage(msg);
     });
 
+    this.socket.on('chunkResponse', (res) => {
+      this.messagesService.chunkResponse(res, this.socket);
+    });
+
     this.socket.on('SessionIni', (ini: SessionInitData) => {
       this.store.dispatch(new SetUserId(ini.userId));
       this.store.dispatch(new SetSessionId(ini.sessionId));
@@ -163,6 +167,6 @@ export class SessionComponent implements OnInit {
 
   sendMessage(msg: SendMessageObject) {
     //send message by emiting it to the socket
-    this.socket.emit(environment.messageIdentifier, msg);
+    this.messagesService.sendMessage(this.socket, msg);
   }
 }

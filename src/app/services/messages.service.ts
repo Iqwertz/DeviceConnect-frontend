@@ -1,3 +1,5 @@
+import { environment } from './../../environments/environment';
+import { SendMessageObject } from './../pages/session/session.component';
 ////////////////////////////////////////////////////
 /*
 Service: MessagesService
@@ -44,6 +46,14 @@ export interface MessageObject {
   type?: messageType;
 }
 
+export type ChunkType = 'start' | 'middle' | 'end';
+
+export interface Chunk {
+  chunkType: ChunkType;
+  chunkData: string;
+  chunkID: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -59,9 +69,12 @@ export class MessagesService {
   userId$;
   userId: string = null;
 
+  chunkQueue: Chunk[] = [];
+
   private onUpdate$$ = new BehaviorSubject<MessageObject[]>([]);
   private onScrollToId$$ = new BehaviorSubject<number>(0);
   messages: MessageObject[] = [];
+  chunkMessageId = 0;
 
   get onUpdate$(): Observable<MessageObject[]> {
     return this.onUpdate$$.asObservable();
@@ -86,6 +99,30 @@ export class MessagesService {
     this.onUpdate$$.next(this.messages);
   }
 
+  sendMessage(socket: SocketIOClient.Socket, msg: SendMessageObject) {
+    //sends messages and handles the file transmission
+    if (msg.base64Data.length > 1) {
+      let chunkedData = this.chunkString(
+        msg.base64Data,
+        environment.chunkSize,
+        this.chunkMessageId++
+      );
+      this.chunkQueue = this.chunkQueue.concat(chunkedData);
+      msg.base64Data = this.chunkMessageId.toString();
+      socket.emit(environment.messageIdentifier, msg);
+    } else {
+      socket.emit(environment.messageIdentifier, msg);
+    }
+  }
+
+  chunkResponse(res, socket: SocketIOClient.Socket) {
+    if ((res.res = 'next')) {
+      console.log(this.chunkQueue);
+      socket.emit('chunkData', this.chunkQueue[0]);
+      this.chunkQueue.shift();
+    }
+  }
+
   removeAllMessages() {
     this.messages = [];
     this.onUpdate$$.next(this.messages);
@@ -93,6 +130,27 @@ export class MessagesService {
 
   scrollToId(id: number) {
     this.onScrollToId$$.next(id);
+  }
+
+  private chunkString(str: string, len: number, messageId: number): Chunk[] {
+    //splits string into chunks
+    const size = Math.ceil(str.length / len);
+    const r: Chunk[] = Array(size);
+    let offset = 0;
+
+    for (let i = 0; i < size; i++) {
+      r[i] = {
+        chunkData: str.substr(offset, len),
+        chunkType: 'middle',
+        chunkID: messageId,
+      };
+      offset += len;
+    }
+
+    r[0].chunkType = 'start';
+    r[r.length - 1].chunkType = 'end';
+
+    return r;
   }
 
   private ngOnDestroy() {
