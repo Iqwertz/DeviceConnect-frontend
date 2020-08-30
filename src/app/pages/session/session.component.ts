@@ -123,6 +123,10 @@ export class SessionComponent implements OnInit {
       this.messagesService.chunkResponse(res, this.socket);
     });
 
+    this.socket.on('chunkData', (chunk) => {
+      this.messagesService.newChunk(chunk, this.socket);
+    });
+
     this.socket.on('SessionIni', (ini: SessionInitData) => {
       this.store.dispatch(new SetUserId(ini.userId));
       this.store.dispatch(new SetSessionId(ini.sessionId));

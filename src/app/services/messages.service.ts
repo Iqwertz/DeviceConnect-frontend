@@ -76,6 +76,10 @@ export class MessagesService {
   private onScrollToId$$ = new BehaviorSubject<number>(0);
   messages: MessageObject[] = [];
   chunkMessageId = 0;
+  receivingMessages: Map<string, MessageObject> = new Map<
+    string,
+    MessageObject
+  >();
 
   get onUpdate$(): Observable<MessageObject[]> {
     return this.onUpdate$$.asObservable();
@@ -127,6 +131,25 @@ export class MessagesService {
     }
   }
 
+  newChunk(chunk: Chunk, socket: SocketIOClient.Socket) {
+    if (chunk.chunkType == 'start') {
+      let msg = Object.assign({}, this.getMessagebyId(Number(chunk.chunkID)));
+      msg.base64Data = chunk.chunkData;
+      this.receivingMessages.set(chunk.chunkID, msg);
+    } else if (chunk.chunkType == 'middle') {
+      let msg = this.receivingMessages.get(chunk.chunkID);
+      msg.base64Data += chunk.chunkData;
+      this.receivingMessages.set(chunk.chunkID, msg);
+    } else if (chunk.chunkType == 'end') {
+      let msg = this.receivingMessages.get(chunk.chunkID);
+      msg.base64Data += chunk.chunkData;
+      this.messages[this.getMessageIndexbyId(Number(chunk.chunkID))] = msg;
+      this.receivingMessages.delete(chunk.chunkID);
+    }
+
+    socket.emit('chunkResponse', { res: 'next', senderId: this.userId });
+  }
+
   removeAllMessages() {
     this.messages = [];
     this.onUpdate$$.next(this.messages);
@@ -170,6 +193,24 @@ export class MessagesService {
     r[r.length - 1].chunkType = 'end';
 
     return r;
+  }
+
+  getMessageIndexbyId(id: number): number {
+    //loops message array and checks if message matches id, returns the index when found
+    for (let i = 0; i < this.messages.length; i++) {
+      if (this.messages[i].messageId == id) {
+        return i;
+      }
+    }
+  }
+
+  getMessagebyId(id: number): MessageObject {
+    //loops message array and checks if message matches id, returns the message when found
+    for (let i = 0; i < this.messages.length; i++) {
+      if (this.messages[i].messageId == id) {
+        return this.messages[i];
+      }
+    }
   }
 
   private ngOnDestroy() {

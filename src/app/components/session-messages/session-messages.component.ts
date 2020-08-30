@@ -75,7 +75,9 @@ export class SessionMessagesComponent implements OnInit {
   downloadFileFromId(fileId: number) {
     //gets message base 64 data converts it to a blob and downloads it
     console.log(fileId);
-    let messageData: MessageObject = this.getMessagebyId(fileId);
+    let messageData: MessageObject = this.messagesService.getMessagebyId(
+      fileId
+    );
     fetch(messageData.base64Data)
       .then((res) => res.blob())
       .then((res) => {
@@ -123,14 +125,5 @@ export class SessionMessagesComponent implements OnInit {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
-  }
-
-  private getMessagebyId(id: number) {
-    //loops message array and checks if message messages id, returns the message when found
-    for (let i = 0; i < this.messageList.length; i++) {
-      if (this.messageList[i].messageId == id) {
-        return this.messageList[i];
-      }
-    }
   }
 }
