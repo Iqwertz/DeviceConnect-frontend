@@ -30,6 +30,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../store/app.state';
 import { Select } from '@ngxs/store';
+import { managers } from 'socket.io-client';
 
 export type ContentType = 'Document' | 'Picture' | 'Text';
 
@@ -52,6 +53,8 @@ export interface Chunk {
   chunkType: ChunkType;
   chunkData: string;
   chunkID: string;
+  chunkIndex: number;
+  parentMessageId: number;
   senderId: string;
 }
 
@@ -112,6 +115,7 @@ export class MessagesService {
         msg.base64Data,
         environment.chunkSize,
         this.userId + this.chunkMessageId,
+        -1,
         this.userId
       );
       this.chunkQueue = this.chunkQueue.concat(chunkedData);
@@ -133,7 +137,17 @@ export class MessagesService {
 
   newChunk(chunk: Chunk, socket: SocketIOClient.Socket) {
     if (chunk.chunkType == 'start') {
-      let msg = Object.assign({}, this.getMessagebyId(Number(chunk.chunkID)));
+      let msg: MessageObject = {
+        //create message object
+        message: status,
+        messageId: -1,
+        userId: '',
+        userName: '',
+        contentType: 'Text',
+        base64Data: '',
+      };
+      Object.assign(msg, this.getMessagebyId(Number(chunk.parentMessageId)));
+      // console.log(msg);
       msg.base64Data = chunk.chunkData;
       this.receivingMessages.set(chunk.chunkID, msg);
     } else if (chunk.chunkType == 'middle') {
@@ -143,11 +157,23 @@ export class MessagesService {
     } else if (chunk.chunkType == 'end') {
       let msg = this.receivingMessages.get(chunk.chunkID);
       msg.base64Data += chunk.chunkData;
-      this.messages[this.getMessageIndexbyId(Number(chunk.chunkID))] = msg;
+      this.messages[
+        this.getMessageIndexbyId(Number(chunk.parentMessageId))
+      ] = msg;
       this.receivingMessages.delete(chunk.chunkID);
+      console.log(msg);
+
+      return;
     }
 
-    socket.emit('chunkResponse', { res: 'next', senderId: this.userId });
+    let msg = this.receivingMessages.get(chunk.chunkID);
+    const cres = {
+      res: 'next',
+      lastChunkIndex: chunk.chunkIndex,
+      parentMessageId: chunk.parentMessageId,
+      senderId: this.userId,
+    };
+    socket.emit('chunkResponse', cres);
   }
 
   removeAllMessages() {
@@ -162,7 +188,8 @@ export class MessagesService {
   private chunkString(
     str: string,
     len: number,
-    messageId: string,
+    chunkId: string,
+    messageId: number,
     senderId: string
   ): Chunk[] {
     //splits string into chunks
@@ -174,8 +201,10 @@ export class MessagesService {
       r[i] = {
         chunkData: str.substr(offset, len),
         chunkType: 'middle',
-        chunkID: messageId,
+        chunkID: chunkId,
         senderId: senderId,
+        chunkIndex: i,
+        parentMessageId: messageId,
       };
       offset += len;
     }
@@ -183,9 +212,11 @@ export class MessagesService {
     if (r.length == 1) {
       r.push({
         chunkData: '',
-        chunkID: messageId,
+        chunkID: chunkId,
         chunkType: 'end',
         senderId: senderId,
+        chunkIndex: 1,
+        parentMessageId: messageId,
       });
     }
 

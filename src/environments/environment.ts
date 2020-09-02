@@ -8,7 +8,7 @@ export const environment = {
   messageIdentifier: 'chat message',
   maxMessageLength: 10000, //in chars
   userAlertTimeout: 3000,
-  chunkSize: 5000,
+  chunkSize: 100000,
   reconnectSettings: {
     reconnection: true,
     reconnectionDelay: 500,
