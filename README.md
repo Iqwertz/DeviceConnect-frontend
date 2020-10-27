@@ -7,8 +7,6 @@
 
 ### ✨ [Demo](https://iqwertz.github.io/Transfertube/)
 
-(Demo backend is currently not working)
-
 ## Install
 
 ```sh
