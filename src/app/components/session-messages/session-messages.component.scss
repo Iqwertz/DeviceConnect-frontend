@@ -178,6 +178,10 @@
     button {
       @include button-background(320deg);
       @include button-style();
+
+      &:hover {
+        @include button-hover();
+      }
     }
   }
 }

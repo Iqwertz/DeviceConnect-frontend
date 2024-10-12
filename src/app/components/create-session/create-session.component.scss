@@ -6,4 +6,10 @@
     @include button-background(149deg);
     @include button-style();
   }
+
+  &:hover {
+    button {
+      @include button-hover();
+    }
+  }
 }

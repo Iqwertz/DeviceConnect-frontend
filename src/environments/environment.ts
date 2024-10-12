@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  socketEndpoint: 'http://62.178.37.97:4269', //'http://172.16.40.80:4269', //http://localhost:3000
+  socketEndpoint: 'https://api.juliushussl.at', //'http://172.16.40.80:4269', //http://localhost:3000
+  subPath: '/deviceconnect',
   messageIdentifier: 'chat message',
   maxMessageLength: 10000, //in chars
   userAlertTimeout: 3000,

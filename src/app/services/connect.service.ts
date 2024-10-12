@@ -28,6 +28,7 @@ export interface NewSessionResponse {
 export class ConnectService implements OnInit {
   constructor(private http: HttpClient) {}
   socketUrl: string = environment.socketEndpoint;
+  socketSubPath: string = environment.subPath;
   newSessionPath: string = '/new';
   socket: SocketIOClient.Socket = null;
 
@@ -35,13 +36,15 @@ export class ConnectService implements OnInit {
 
   newSession(): Observable<NewSessionResponse> {
     return this.http.post<NewSessionResponse>(
-      this.socketUrl + this.newSessionPath,
+      this.socketUrl + this.socketSubPath + this.newSessionPath,
       {}
     );
   }
 
   checkSession(id: string): Observable<void> {
-    return this.http.get<void>(this.socketUrl + '/session/' + id);
+    return this.http.get<void>(
+      this.socketUrl + this.socketSubPath + '/session/' + id
+    );
   }
 
   joinSession(id: string): SocketIOClient.Socket {
@@ -50,7 +53,7 @@ export class ConnectService implements OnInit {
       this.socket.close();
       this.socket = null;
     }
-    const path: string = '/' + id;
+    const path: string = this.socketSubPath + '/' + id;
     this.socket = io(this.socketUrl, {
       //connect to socket and set reconnection settings
       path,

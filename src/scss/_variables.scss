@@ -94,6 +94,12 @@ $alert-user-error: linear-gradient(240.98deg, #e00022 0%, #ffab03 100%);
   font-size: 1.5em;
   border-radius: 20px;
   color: $light-text-color;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+@mixin button-hover() {
+  transform: scale(1.05);
 }
 
 $media-breakpoint-medium: 1000px;

@@ -19,6 +19,14 @@ npm install
 ng serve
 ```
 
+Since all the packages are now a bit outdated you might need to run: 
+  
+  ```sh
+  export NODE_OPTIONS=--openssl-legacy-provider
+  ```
+
+This is not recommended for production but since this is just a small project it should be fine. Should this ever be used professionally you should update the packages.
+
 ## Features
 
 - [x] Create Session
